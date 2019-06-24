@@ -5,42 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/15 15:36:09 by manki             #+#    #+#             */
-/*   Updated: 2018/05/16 17:00:30 by manki            ###   ########.fr       */
+/*   Created: 2019/06/24 13:00:08 by manki             #+#    #+#             */
+/*   Updated: 2019/06/24 17:16:13 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "../includes/ft_printf.h"
+#include "../inc/ft_printf.h"
 
-static int		ft_putformat(char *str)
+int		ft_strlen_till_c(const char *str, char c)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
-	while (str[i])
-	{
-		while (str[i] && str[i] != '%')
-		{
-			ft_putchar(str[i]);
-			i++;
-		}
-		if (str[i] && str[i] == '%')
-			;
-	}
+	while (str[i] && str[i] != c)
+		i++;
 	return (i);
 }
 
-int				ft_printf(const char * restrict format, ...)
+int		ft_printf(const char * restrict format, ...)
 {
-	int			i;
-	va_list		list;
+	va_list	ap;
+	int		ret;
+	char	*ptr;
+	char	*output;
 
-	i = 0;
-	i = ft_putformat((char *)format);
-	va_start(list, format);
-	va_end(list);
-	return (ft_strlen(format));
+	ret = ft_strlen(format);
+	if (ret > 0)
+	{
+		if (!(ptr = ft_strchr(format, '%')))
+			ft_putstr(format);
+		else
+		{
+			if (!(output = ft_strnew(ft_strlen_till_c(format, '%'))))
+				return (-1);
+			/*
+			 *traitement du %
+			 */
+			va_start(ap, format);
+			va_arg(ap, char *);
+			va_end(ap);
+			ret = ft_strlen(output);
+			ft_putstr(output);
+		}
+	}
+	return (ret);
 }

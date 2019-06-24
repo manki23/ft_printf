@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2018/05/16 17:00:26 by manki            ###   ########.fr       */
+/*   Created: 2017/11/13 15:47:48 by manki             #+#    #+#             */
+/*   Updated: 2017/11/13 15:50:01 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-
-#include <stdarg.h>
-#include <stdlib.h>
 #include <unistd.h>
-# include "../libft/libft.h"
 
-int		ft_printf(const char * restrict format, ...);
-
-#endif
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}

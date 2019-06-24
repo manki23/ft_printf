@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/06/24 16:40:29 by manki            ###   ########.fr        #
+#    Updated: 2018/05/16 17:29:28 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,33 +16,13 @@
 
 NAME = libftprintf.a
 
-SRC_PATH = ./src
-LIB_PATH = ./lib
-INC_PATH = ./inc
-OBJ_PATH = ./obj
-OBJLIB_PATH = ./obj
+SRCS = ft_printf.c
 
-SRC_NAME = ft_printf.c
+INCLUDES = ./includes/ ./sources/
 
-LIB_NAME = ft_atoi.c ft_bzero.c ft_isdigit.c ft_itoa.c ft_memchr.c ft_memcpy.c \
-		   ft_memset.c ft_putchar.c ft_putstr.c ft_strchr.c ft_strcmp.c \
-		   ft_strdel.c ft_strjoin.c ft_strlen.c ft_strncmp.c ft_strnew.c \
-		   ft_strsub.c
-
-INC_NAME = ft_printf.h
-
-OBJ_NAME = $(SRC_NAME:.c=.o)
-
-OBJLIB_NAME = $(LIB_NAME:.c=.o)
-
-SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
-INC = $(addprefix $(INC_PATH)/, $(INC_NAME))
-LIB = $(addprefix $(LIB_PATH)/, $(LIB_NAME))
-OBJ = $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
-OBJLIB = $(addprefix $(OBJLIB_PATH)/,$(OBJLIB_NAME))
+OBJ = $(SRCS:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror
-CC = gcc
 
 							#############
 							#	COLORS	#
@@ -62,30 +42,26 @@ _END=			$ \033[0m
 
 all: $(NAME)
 
-$(OBJLIB_PATH)/%.o: $(LIB_PATH)/%.c
-		@mkdir $(OBJLIB_PATH) 2> /dev/null || true
-		@$(CC) $(FLAGS) -o $@ -c $<
+%.o: %.c
+	@gcc $(FLAGS) -I $(INCLUDES) -c $?
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-		@mkdir $(OBJ_PATH) 2> /dev/null || true
-		@$(CC) $(FLAGS) -o $@ -c $<
+libft:
+		@echo "$(_GREEN)Building up libft.a$(_END)"
+		@make -C libft all
 
-$(NAME): $(OBJ) $(OBJLIB)
-		@echo "$(_GREEN)Building up $(NAME)...$(_END)"
-		@ar rc $(NAME) $(OBJ) $(OBJLIB)
+$(NAME): libft $(OBJ)
+		@echo "$(_GREEN)Building up $(NAME)$(_END)"
+		@ar rc $(NAME) $(OBJ)
 		@ranlib $(NAME)
-		@echo "$(_GREEN) [OK]$(_END)"
 
 clean:
-		@echo "$(_PURPLE)Deleting object files...$(_END)"
-		@/bin/rm -f $(OBJ) $(OBJLIB)
-		@echo "$(_PURPLE) [OK]$(_END)"
+		@echo "$(_PURPLE)Deleting object files$(_END)"
+#		/bin/rm -f $(OBJ)
+		@make -C libft clean
 
 fclean: clean
 		@echo "$(_RED)Deleting $(NAME)$(_END)"
-		@/bin/rm -rf $(OBJ_PATH) $(NAME)
+		@/bin/rm -f $(NAME)
+		@make -C libft fclean
 
 re: fclean all
-
-norme:
-		norminette $(SRC) $(LIB) $(INC)
