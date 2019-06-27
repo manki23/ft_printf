@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/06/26 15:11:25 by manki            ###   ########.fr       */
+/*   Updated: 2019/06/27 16:00:35 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,17 @@ int					ft_printf(const char *restrict format, ...);
 
 char				*ft_conv(char **p, va_list *ap);
 
+int					ft_nblen(int n);
+void				ft_display_option(t_option opt);
+void				ft_init_option(t_option *opt);
+void				ft_tr(char *s, char old, char neww);
+void				ft_fill_t_option(t_option *opt, char **p);
+char				*ft_fill_di_output(t_option opt, int arg);
+
 int					ft_atoi(const char *str);
-void				ft_bzero(void *s, size_t n);
 int					ft_isdigit(int c);
 char				*ft_itoa(int n);
+char				*ft_itoa_base(int n, char base[]);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
