@@ -6,11 +6,26 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/06/27 16:04:43 by manki            ###   ########.fr       */
+/*   Updated: 2019/06/30 16:05:02 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
+
+static t_conv	g_tab[] =
+{
+	{"d", &ft_fill_di_output},
+	{"i", &ft_fill_di_output},
+	{"o", &ft_fill_o_output},
+	{"u", &ft_fill_u_output},
+	{"x", &ft_fill_x_output},
+	{"X", &ft_fill_x_output},
+	{"%", &ft_fill_pourcent_output},
+	{"c", &ft_fill_c_output},
+	{"s", &ft_fill_s_output},
+	{"p", &ft_fill_p_output},
+	{"f", &ft_fill_f_output}
+};
 
 void	ft_init_option(t_option *opt)
 {
@@ -24,9 +39,23 @@ void	ft_init_option(t_option *opt)
 	opt->precision = 0;
 }
 
+int		ft_is_conv(char c)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 11)
+	{
+		if (c == (g_tab + i)->c[0])
+			return(1);
+	}
+	return (0);
+}
+
 void	ft_fill_t_option(t_option *opt, char **p)
 {
-	while (p[0][0] && p[0][0] != 'd' && p[0][0] != 'i')
+	p[0]++;
+	while (p[0][0] && !ft_is_conv(p[0][0]))
 	{
 		if (p[0][0] == '-')
 			opt->minus++;
@@ -54,75 +83,27 @@ void	ft_fill_t_option(t_option *opt, char **p)
 	}
 }
 
-char	*ft_fill_di_output(t_option opt, int arg)
-{
-	char	*output;
-	char	*nb;
-	char	*zero;
-	int		len;
-
-	len = opt.precision - ft_nblen(arg);
-	if (ft_nblen(arg) < opt.precision)
-	{
-		zero = ft_strnew(len);
-		ft_memset(zero, '0', len);
-		nb = ft_itoa(arg);
-		if (arg < 0)
-		{
-			nb = ft_strjoin(zero, &nb[1]);
-			zero[0] = '-';
-			zero[1] = '\0';
-		}
-		nb = ft_strjoin(zero, nb);
-	}
-	else if (arg == 0 && opt.point && !opt.precision)
-		nb = "";
-	else
-		nb = ft_itoa(arg);
-	if (opt.plus && arg >= 0)
-		nb = ft_strjoin("+", nb);
-	else if (opt.space && arg >= 0)
-		nb = ft_strjoin(" ", nb);
-	if (opt.width > (int)ft_strlen(nb))
-	{
-		output = ft_strnew(opt.width - ft_strlen(nb));
-		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!opt.minus && !opt.point && opt.zero)
-			ft_tr(output, ' ', '0');
-		if (opt.minus)
-			output = ft_strjoin(nb, output);
-		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.minus
-					&& !opt.point) || (!opt.minus && !opt.point && opt.zero &&
-						arg < 0))
-		{
-			output = ft_strjoin(output, &nb[1]);
-			nb[1] = '\0';
-			output = ft_strjoin(nb, output);
-		}
-		else
-			output = ft_strjoin(output, nb);
-	}
-	else
-		output = nb;
-	return (output);
-}
-
 char	*ft_conv(char **p, va_list *ap)
 {
 	t_option	opt;
 	char		*output;
+	int			i;
 
 	while (p[0][0])
 	{
 		ft_init_option(&opt);
 		ft_fill_t_option(&opt, p);
-		if (p[0][0] == 'd' || p[0][0] == 'i')
+		i = -1;
+		while (g_tab + ++i)
 		{
-			output = ft_fill_di_output(opt, va_arg(*ap, int));
-			p[0]++;
-			return (output);
+			if (p[0][0] == (g_tab + i)->c[0])
+			{
+				output = (g_tab + i)->fun(opt, ap);
+				p[0]++;
+				return (output);
+			}
 		}
-		return ("not done yet!\n");
+		return ("Error\n");
 	}
 	return (NULL);
 }

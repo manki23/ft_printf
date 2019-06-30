@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:01:53 by manki             #+#    #+#             */
-/*   Updated: 2019/06/27 17:07:33 by manki            ###   ########.fr       */
+/*   Updated: 2019/06/30 15:09:08 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,14 @@ int		main(int ac, char *av[])
 	ac--;
 	av++;
 	//test 1
+	int v = 42;
+	char s[] = "popo";
 	printf("printf\t\t:");
 	opt.minus++;
-	r = printf("%o:%o:%o:%o:%o:%o:%o\n", 1073741824, 2147483648, -8, -1, -2147483647, 10, -42);
+	r = printf(":%d:\n:%i:\n:%o:\n:%u:\n:%x:\n:%X:\n:%c:\n:%s:\n:%p:\n:%f:\n----------------------------\n", v, v, v, v, v, v, v, s, s, 3.14);
 	ft_printf("ft_printf\t:");
-	rft = ft_printf("%o:%o:%o:%o:%o:%o:%o\n", 0, -1, 8, 4, 16, 10, -42);
+	rft = ft_printf(":%d:\n:%i:\n:%o:\n:%u:\n:%x:\n:%X:\n:%c:\n:%s:\n:%p:\n:%f:\n", v, v, v, v, v, v, v, s, s, 3.14);
 	printf("r = %d | rft = %d\n", r, rft);
-	ft_printf(ft_itoa_base(1073741824, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(2147483648, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(-8, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(-1, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(-2147483648, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(10, "01234567"));
-	ft_printf(":");
-	ft_printf(ft_itoa_base(-42, "01234567"));
-	ft_printf("\n");
 //	printf("r = %d\n", r);
 	return (0);
 }

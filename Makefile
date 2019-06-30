@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/06/27 16:03:55 by manki            ###   ########.fr        #
+#    Updated: 2019/06/30 14:15:14 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ INC_PATH = ./inc
 OBJ_PATH = ./obj
 OBJLIB_PATH = ./obj
 
-SRC_NAME = ft_printf.c ft_analysis.c ft_utils.c ft_display.c
+SRC_NAME = ft_printf.c ft_analysis.c ft_utils.c ft_display.c \
+		   ft_fill_di_output.c to_do.c
 
 LIB_NAME = ft_atoi.c ft_isdigit.c ft_itoa.c ft_itoa_base.c ft_memchr.c \
 		   ft_memcpy.c ft_memset.c ft_putchar.c ft_putstr.c ft_strchr.c \
