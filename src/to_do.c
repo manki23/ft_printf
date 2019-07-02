@@ -6,22 +6,11 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:28:10 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 19:35:35 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 19:57:03 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
-
-char	*ft_fill_u_output(t_option opt, va_list *ap)
-{
-	unsigned int	arg;
-	char			*output;
-
-	(void)opt;
-	arg = va_arg(*ap, unsigned int);
-	output = ft_strjoin(ft_lltoa(arg), "(flag %u not done yet)");
-	return (output);
-}
 
 char	*ft_fill_o_output(t_option opt, va_list *ap)
 {

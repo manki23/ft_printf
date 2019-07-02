@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fill_di_output.c                                :+:      :+:    :+:   */
+/*   ft_fill_u_output.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 20:30:18 by manki            ###   ########.fr       */
+/*   Created: 2019/07/02 20:09:22 by manki             #+#    #+#             */
+/*   Updated: 2019/07/02 20:27:48 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static char		*ft_fill_nb(t_option opt, int len, long long arg)
+static int		ft_unsigned_nblen(unsigned long long n)
+{
+	if (n < 10)
+		return (1);
+	else
+		return (ft_nblen(n / 10) + ft_nblen(n % 10));
+}
+static char		*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 {
 	char	*zero;
 	char	*nb;
@@ -21,27 +28,16 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 	{
 		zero = ft_strnew(len);
 		ft_memset(zero, '0', len);
-		nb = ft_lltoa(arg);
-		if (arg < 0)
-		{
-			nb = ft_strjoin(zero, &nb[1]);
-			zero[0] = '-';
-			zero[1] = '\0';
-		}
-		nb = ft_strjoin(zero, nb);
+		nb = ft_strjoin(zero, ft_ulltoa(arg));
 	}
 	else if (arg == 0 && opt.point && !opt.precision)
 		nb = "";
 	else
 		nb = ft_lltoa(arg);
-	if (opt.plus && arg >= 0)
-		nb = ft_strjoin("+", nb);
-	else if (opt.space && arg >= 0)
-		nb = ft_strjoin(" ", nb);
 	return (nb);
 }
 
-static char		*ft_fill_output(t_option opt, char *nb, long long arg)
+static char		*ft_fill_output(t_option opt, char *nb)
 {
 	char	*output;
 
@@ -53,14 +49,6 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 			ft_tr(output, ' ', '0');
 		if (opt.minus)
 			output = ft_strjoin(nb, output);
-		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.minus
-					&& !opt.point) || (!opt.minus && !opt.point && opt.zero &&
-						arg < 0))
-		{
-			output = ft_strjoin(output, &nb[1]);
-			nb[1] = '\0';
-			output = ft_strjoin(nb, output);
-		}
 		else
 			output = ft_strjoin(output, nb);
 	}
@@ -69,7 +57,7 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 	return (output);
 }
 
-static int		ft_if_short_mod(t_option opt, int arg)
+/*int				ft_if_short_mod(t_option opt, int arg)
 {
 	int		mod;
 
@@ -83,22 +71,22 @@ static int		ft_if_short_mod(t_option opt, int arg)
 	while ((opt.hh || opt.h) && arg < -(mod / 2))
 		arg += mod;
 	return (arg);
-}
+}*/
 
-char			*ft_fill_di_output(t_option opt, va_list *ap)
+char			*ft_fill_u_output(t_option opt, va_list *ap)
 {
-	char		*output;
-	char		*nb;
-	int			len;
-	long long	arg;
+	unsigned long long	arg;
+	char				*output;
+	char				*nb;
+	int					len;
 
-	arg = va_arg(*ap, long long);
+	arg = va_arg(*ap, unsigned long long);
 	if (opt.l)
-		arg = (long)arg;
+		arg = (unsigned long)arg;
 	else if (!opt.ll && !opt.l)
-		arg = ft_if_short_mod(opt, arg);
-	len = opt.precision - ft_nblen(arg);
+		arg = (unsigned int)arg;
+	len = opt.precision - ft_unsigned_nblen(arg);
 	nb = ft_fill_nb(opt, len, arg);
-	output = ft_fill_output(opt, nb, arg);
+	output = ft_fill_output(opt, nb);
 	return (output);
 }

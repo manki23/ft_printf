@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 19:33:57 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 20:06:30 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
 char				*ft_lltoa(long long n);
 char				*ft_lltoa_base(long long n, char base[]);
+char				*ft_ulltoa(unsigned long long n);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
