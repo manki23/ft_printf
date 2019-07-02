@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_lltoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:31:55 by manki             #+#    #+#             */
-/*   Updated: 2019/06/27 16:01:33 by manki            ###   ########.fr       */
+/*   Created: 2019/07/02 19:34:31 by manki             #+#    #+#             */
+/*   Updated: 2019/07/02 19:34:35 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static void		ft_nb(char *s, int n, int i, char base[])
+static void		ft_nb(char *s, long long n, int i, char base[])
 {
-	int		len;
+	long long	len;
 
 	len = ft_strlen(base);
 	if (n < len && n > -len)
@@ -53,13 +53,13 @@ static int		ft_isvalid_base(char b[], int size)
 	return (ok);
 }
 
-static void		ft_fill(char *res, char base[], int n, int len)
+static void		ft_fill(char *res, char base[], long long n, int len)
 {
 	ft_nb(res, n, 0, base);
 	res[len] = '\0';
 }
 
-char		*ft_itoa_base(int n, char base[])
+char		*ft_lltoa_base(long long n, char base[])
 {
 	int		neg;
 	char	*res;

@@ -6,13 +6,13 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 15:36:43 by manki             #+#    #+#             */
-/*   Updated: 2019/06/26 15:37:48 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 19:15:11 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-int		ft_nblen(int n)
+int		ft_nblen(long long n)
 {
 	if (n < 10 && n > -10)
 		return (1);

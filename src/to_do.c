@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:28:10 by manki             #+#    #+#             */
-/*   Updated: 2019/06/30 16:05:05 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 19:35:35 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_fill_u_output(t_option opt, va_list *ap)
 
 	(void)opt;
 	arg = va_arg(*ap, unsigned int);
-	output = ft_strjoin(ft_itoa((int)arg), "(flag %u not done yet)");
+	output = ft_strjoin(ft_lltoa(arg), "(flag %u not done yet)");
 	return (output);
 }
 
@@ -30,7 +30,7 @@ char	*ft_fill_o_output(t_option opt, va_list *ap)
 
 	(void)opt;
 	arg = va_arg(*ap, unsigned int);
-	output = ft_strjoin(ft_itoa_base((int)arg, "01234567"), "(flag %o not done yet)");
+	output = ft_strjoin(ft_lltoa_base((int)arg, "01234567"), "(flag %o not done yet)");
 	return (output);
 }
 
@@ -41,7 +41,7 @@ char	*ft_fill_x_output(t_option opt, va_list *ap)
 
 	(void)opt;
 	arg = va_arg(*ap, unsigned int);
-	output = ft_strjoin(ft_itoa_base((int)arg, "0123456789abcdef"), "(flag %x not done yet)");
+	output = ft_strjoin(ft_lltoa_base((int)arg, "0123456789abcdef"), "(flag %x not done yet)");
 	return (output);
 }
 

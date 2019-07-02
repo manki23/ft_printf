@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/06/30 16:05:10 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 19:33:57 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ typedef struct		s_option
 	int		point;
 	int		width;
 	int		precision;
+	int		hh;
+	int		h;
+	int		l;
+	int		ll;
+	int		ld;
 }					t_option;
 
 typedef char		*(*t_ft_conv)(t_option, va_list *);
@@ -41,7 +46,7 @@ int					ft_printf(const char *restrict format, ...);
 
 char				*ft_conv(char **p, va_list *ap);
 
-int					ft_nblen(int n);
+int					ft_nblen(long long n);
 void				ft_display_option(t_option opt);
 void				ft_init_option(t_option *opt);
 void				ft_tr(char *s, char old, char neww);
@@ -59,8 +64,8 @@ char				*ft_fill_f_output(t_option opt, va_list *ap);
 
 int					ft_atoi(const char *str);
 int					ft_isdigit(int c);
-char				*ft_itoa(int n);
-char				*ft_itoa_base(int n, char base[]);
+char				*ft_lltoa(long long n);
+char				*ft_lltoa_base(long long n, char base[]);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

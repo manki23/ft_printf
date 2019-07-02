@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:01:53 by manki             #+#    #+#             */
-/*   Updated: 2019/06/30 15:09:08 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/02 19:24:52 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int		main(int ac, char *av[])
 	ac--;
 	av++;
 	//test 1
-	int v = 42;
+	long long v = -42;
 	char s[] = "popo";
 	printf("printf\t\t:");
 	opt.minus++;
-	r = printf(":%d:\n:%i:\n:%o:\n:%u:\n:%x:\n:%X:\n:%c:\n:%s:\n:%p:\n:%f:\n----------------------------\n", v, v, v, v, v, v, v, s, s, 3.14);
+	r = printf("%ld\n", 2147483648);
 	ft_printf("ft_printf\t:");
-	rft = ft_printf(":%d:\n:%i:\n:%o:\n:%u:\n:%x:\n:%X:\n:%c:\n:%s:\n:%p:\n:%f:\n", v, v, v, v, v, v, v, s, s, 3.14);
+	rft = ft_printf("%ld\n", 2147483648);
 	printf("r = %d | rft = %d\n", r, rft);
 //	printf("r = %d\n", r);
 	return (0);

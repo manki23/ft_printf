@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_lltoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/13 14:22:56 by manki             #+#    #+#             */
-/*   Updated: 2017/12/27 15:57:21 by manki            ###   ########.fr       */
+/*   Created: 2019/07/02 19:31:32 by manki             #+#    #+#             */
+/*   Updated: 2019/07/02 19:31:38 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
 
-static int		ft_nblen(int n)
+static int		ft_nblen(long long n)
 {
 	if (n < 10 && n > -10)
 		return (1);
@@ -21,7 +21,7 @@ static int		ft_nblen(int n)
 		return (ft_nblen(n / 10) + ft_nblen(n % 10));
 }
 
-static void		ft_nb(char *s, int n, int i, int len)
+static void		ft_nb(char *s, long long n, int i, int len)
 {
 	if (n < 10 && n > -10)
 	{
@@ -37,13 +37,13 @@ static void		ft_nb(char *s, int n, int i, int len)
 	}
 }
 
-static void		ft_fill(char *res, int i, int n, int len)
+static void		ft_fill(char *res, int i, long long n, int len)
 {
 	ft_nb(res, n, i, len);
 	res[len] = '\0';
 }
 
-char			*ft_itoa(int n)
+char			*ft_lltoa(long long n)
 {
 	int		neg;
 	char	*res;
