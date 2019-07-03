@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 10:15:35 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 12:14:06 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 15:57:39 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int		ft_isvalid_base(char b[], int size)
 	ok = 1;
 	while (ok && size > 0)
 	{
-		i= 0;
+		i = 0;
 		while (ok && i < size)
 		{
 			if (b[size] == b[i])
@@ -66,7 +66,7 @@ static void		ft_fill(char *res, char base[], unsigned long long n, int len)
 }
 
 char			*ft_ulltoa_base(unsigned long long n, char base[])
-{		
+{
 	char	*res;
 	int		len;
 

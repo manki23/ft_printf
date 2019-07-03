@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 20:03:08 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 20:06:06 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 15:52:46 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int		ft_nblen(unsigned long long n)
 }
 
 static void		ft_nb(char *s, unsigned long long n, int i, int len)
-{		
+{
 	if (n < 10)
 		s[i] = '0' + n;
 	else

@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:34:31 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 12:17:17 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 15:52:00 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void		ft_fill(char *res, char base[], long long n, int len)
 	res[len] = '\0';
 }
 
-char		*ft_lltoa_base(long long n, char base[])
+char			*ft_lltoa_base(long long n, char base[])
 {
 	int		neg;
 	char	*res;

@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:28:10 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 15:04:44 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 15:50:10 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*ft_fill_p_output(t_option opt, va_list *ap)
 char	*ft_fill_f_output(t_option opt, va_list *ap)
 {
 	void	*arg;
-//	char	*output;
 
 	(void)opt;
 	arg = va_arg(*ap, void *);

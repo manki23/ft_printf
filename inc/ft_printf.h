@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 13:10:25 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 16:12:09 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ typedef struct		s_conv
 	char			*c;
 	t_ft_conv		fun;
 }					t_conv;
+
+typedef struct		s_output
+{
+	char			*data;
+	size_t			size;
+	struct s_output	*next;
+}					t_output;
 
 int					ft_printf(const char *restrict format, ...);
 

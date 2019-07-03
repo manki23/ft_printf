@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 15:03:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 15:40:23 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 15:58:07 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,3 @@ char				*ft_fill_s_output(t_option opt, va_list *ap)
 	output = ft_fill_output(opt, str);
 	return (output);
 }
-/*
-char				*ft_fill_s_output(t_option opt, va_list *ap	)
-{
-	char	*arg;
-	char	*output;
-
-	(void)opt;
-	arg = va_arg(*ap, char *);
-	output = ft_strjoin(arg, "");
-	return (output);
-}*/
