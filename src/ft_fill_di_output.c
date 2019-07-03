@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 20:30:18 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 12:31:31 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 			ft_tr(output, ' ', '0');
 		if (opt.minus)
 			output = ft_strjoin(nb, output);
-		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.minus
-					&& !opt.point) || (!opt.minus && !opt.point && opt.zero &&
-						arg < 0))
+		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.point)
+				|| (!opt.point && opt.zero && arg < 0))
 		{
 			output = ft_strjoin(output, &nb[1]);
 			nb[1] = '\0';
@@ -71,18 +70,12 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 
 static int		ft_if_short_mod(t_option opt, int arg)
 {
-	int		mod;
-
-	mod = 0;
 	if (opt.hh)
-		mod = 256;
+		return ((char)arg);
 	else if (opt.h)
-		mod = 65536;
-	while ((opt.hh || opt.h) && arg > ((mod / 2) - 1))
-		arg -= mod;
-	while ((opt.hh || opt.h) && arg < -(mod / 2))
-		arg += mod;
-	return (arg);
+		return ((short)arg);
+	else
+		return (arg);
 }
 
 char			*ft_fill_di_output(t_option opt, va_list *ap)

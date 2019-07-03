@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lltoa_base.c                                    :+:      :+:    :+:   */
+/*   ft_ulltoa_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/02 19:34:31 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 12:17:17 by manki            ###   ########.fr       */
+/*   Created: 2019/07/03 10:15:35 by manki             #+#    #+#             */
+/*   Updated: 2019/07/03 12:14:06 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,18 @@ static int		ft_len(unsigned long long n, char base[])
 
 	len = ft_strlen(base);
 	if (n < len)
-		return (1)	;
+		return (1);
 	else
 		return (ft_len(n / len, base) + ft_len(n % len, base));
 }
 
-static void		ft_nb(char *s, long long n, int i, char base[])
+static void		ft_nb(char *s, unsigned long long n, int i, char base[])
 {
-	long long	len;
+	unsigned long long	len;
 
 	len = ft_strlen(base);
-	if (n < len && n > -len)
-	{
-		if (n < 0)
-			s[i] = base[-n];
-		else
-			s[i] = base[n];
-	}
+	if (n < len)
+		s[i] = base[n];
 	else
 	{
 		ft_nb(s, n / len, i, base);
@@ -50,7 +45,7 @@ static int		ft_isvalid_base(char b[], int size)
 	ok = 1;
 	while (ok && size > 0)
 	{
-		i = 0;
+		i= 0;
 		while (ok && i < size)
 		{
 			if (b[size] == b[i])
@@ -64,35 +59,23 @@ static int		ft_isvalid_base(char b[], int size)
 	return (ok);
 }
 
-static void		ft_fill(char *res, char base[], long long n, int len)
+static void		ft_fill(char *res, char base[], unsigned long long n, int len)
 {
 	ft_nb(res, n, 0, base);
 	res[len] = '\0';
 }
 
-char		*ft_lltoa_base(long long n, char base[])
-{
-	int		neg;
+char			*ft_ulltoa_base(unsigned long long n, char base[])
+{		
 	char	*res;
+	int		len;
 
 	if (ft_strlen(base) > 1 && ft_isvalid_base(base, ft_strlen(base) - 1))
 	{
-		neg = 0;
-		if (n < 0)
-			neg = 1;
-		if (neg)
-		{
-			if (!(res = (char *)malloc(sizeof(char) * (ft_len(n, base) + 2))))
-				return (NULL);
-			res[0] = '-';
-			ft_fill(&res[1], base, n, ft_len(n, base) + 1);
-		}
-		else
-		{
-			if (!(res = (char *)malloc(sizeof(char) * (ft_len(n, base) + 1))))
-				return (NULL);
-			ft_fill(res, base, n, ft_len(n, base));
-		}
+		len = ft_len(n, base);
+		if (!(res = ft_strnew(len)) && !ft_memset(res, '\0', len + 1))
+			return (NULL);
+		ft_fill(res, base, n, ft_len(n, base));
 		return (res);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 18:08:03 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 13:15:09 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static t_conv	g_tab[] =
 {
 	{"d", &ft_fill_di_output},
 	{"i", &ft_fill_di_output},
-	{"o", &ft_fill_o_output},
-	{"u", &ft_fill_u_output},
-	{"x", &ft_fill_x_output},
-	{"X", &ft_fill_x_output},
+	{"o", &ft_fill_uoxx_output},
+	{"u", &ft_fill_uoxx_output},
+	{"x", &ft_fill_uoxx_output},
+	{"X", &ft_fill_uoxx_output},
 	{"%", &ft_fill_pourcent_output},
 	{"c", &ft_fill_c_output},
 	{"s", &ft_fill_s_output},
@@ -29,6 +29,7 @@ static t_conv	g_tab[] =
 
 void	ft_init_option(t_option *opt)
 {
+	opt->flag = '\0';
 	opt->minus = 0;
 	opt->plus = 0;
 	opt->zero = 0;
@@ -72,7 +73,7 @@ int		ft_fill_length_mod(t_option *opt, char **p)
 		opt->l += 1;
 	else if (p[0][0] == 'L' && (inc = 1))
 		opt->ld += 1;
-	p[0] += inc;;
+	p[0] += inc;
 	return (1);
 }
 
@@ -103,6 +104,7 @@ void	ft_fill_t_option(t_option *opt, char **p)
 			p[0] += ft_nblen(ft_atoi(p[0])) - 1;
 		}
 	}
+	opt->flag = p[0][0];
 }
 
 char	*ft_conv(char **p, va_list *ap)

@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 20:06:30 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/03 13:10:25 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef struct		s_option
 {
+	char	flag;
 	int		minus;
 	int		plus;
 	int		zero;
@@ -47,15 +48,14 @@ int					ft_printf(const char *restrict format, ...);
 char				*ft_conv(char **p, va_list *ap);
 
 int					ft_nblen(long long n);
+int					ft_unsigned_nblen(unsigned long long n);
 void				ft_display_option(t_option opt);
 void				ft_init_option(t_option *opt);
 void				ft_tr(char *s, char old, char neww);
 void				ft_fill_t_option(t_option *opt, char **p);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap);
-char				*ft_fill_u_output(t_option opt, va_list *ap);
-char				*ft_fill_o_output(t_option opt, va_list *ap);
-char				*ft_fill_x_output(t_option opt, va_list *ap);
+char				*ft_fill_uoxx_output(t_option opt, va_list *ap);
 char				*ft_fill_pourcent_output(t_option opt, va_list *ap);
 char				*ft_fill_c_output(t_option opt, va_list *ap);
 char				*ft_fill_s_output(t_option opt, va_list *ap);
@@ -67,6 +67,7 @@ int					ft_isdigit(int c);
 char				*ft_lltoa(long long n);
 char				*ft_lltoa_base(long long n, char base[]);
 char				*ft_ulltoa(unsigned long long n);
+char				*ft_ulltoa_base(unsigned long long n, char base[]);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

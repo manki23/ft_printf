@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/07/02 20:24:13 by manki            ###   ########.fr        #
+#    Updated: 2019/07/03 15:08:18 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,13 @@ OBJ_PATH = ./obj
 OBJLIB_PATH = ./obj
 
 SRC_NAME = ft_printf.c ft_analysis.c ft_utils.c ft_display.c \
-		   ft_fill_di_output.c to_do.c ft_fill_u_output.c
+		   ft_fill_di_output.c to_do.c ft_fill_uoxx_output.c \
+		   ft_fill_pourcent_output.c ft_fill_c_output.c ft_fill_s_output.c
 
 LIB_NAME = ft_atoi.c ft_isdigit.c ft_lltoa.c ft_lltoa_base.c ft_ulltoa.c \
-		   ft_memchr.c ft_memcpy.c ft_memset.c ft_putchar.c ft_putstr.c \
-		   ft_strchr.c ft_strcmp.c ft_strdel.c ft_strjoin.c ft_strlen.c \
-		   ft_strncmp.c ft_strnew.c ft_strsub.c
+		   ft_ulltoa_base.c ft_memchr.c ft_memcpy.c ft_memset.c ft_putchar.c \
+		   ft_putstr.c ft_strchr.c ft_strcmp.c ft_strdel.c ft_strjoin.c \
+		   ft_strlen.c ft_strncmp.c ft_strnew.c ft_strsub.c
 
 INC_NAME = ft_printf.h
 
