@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 13:25:07 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 14:31:06 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 16:28:28 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char			*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 	char	*base;
 
 	base = ft_what_base(opt);
-	if (ft_unsigned_nblen(arg) < opt.precision)
+	if (ft_unblen_base(arg, base) < opt.precision)
 	{
 		zero = ft_strnew(len);
 		ft_memset(zero, '0', len);
@@ -41,7 +41,9 @@ static char			*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 		nb = "";
 	else
 		nb = ft_ulltoa_base(arg, base);
-	if (opt.hashtag && opt.flag == 'o')
+	if (opt.hashtag && opt.flag == 'o' && opt.precision <= 
+			ft_unblen_base(arg, base)  && (arg || (!opt.precision && opt.point
+					&& !arg)))
 		nb = ft_strjoin("0", nb);
 	else if (opt.hashtag && opt.flag == 'x' && arg)
 		nb = ft_strjoin("0x", nb);
@@ -87,7 +89,7 @@ static unsigned int	ft_if_short_mod(t_option opt, unsigned long long arg)
 		return (arg);
 }
 
-char				*ft_fill_uoxx_output(t_option opt, va_list *ap)
+char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *siz)
 {
 	unsigned long long	arg;
 	char				*output;
@@ -99,8 +101,9 @@ char				*ft_fill_uoxx_output(t_option opt, va_list *ap)
 		arg = (unsigned long)arg;
 	else if (!opt.ll && !opt.l)
 		arg = ft_if_short_mod(opt, arg);
-	len = opt.precision - ft_unsigned_nblen(arg);
+	len = opt.precision - ft_unblen_base(arg, ft_what_base(opt));
 	nb = ft_fill_nb(opt, len, arg);
 	output = ft_fill_output(opt, nb);
+	siz[0] = ft_strlen(output);
 	return (output);
 }

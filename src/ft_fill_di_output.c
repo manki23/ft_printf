@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 12:31:31 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 10:54:42 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int		ft_if_short_mod(t_option opt, int arg)
 		return (arg);
 }
 
-char			*ft_fill_di_output(t_option opt, va_list *ap)
+char			*ft_fill_di_output(t_option opt, va_list *ap, size_t *size)
 {
 	char		*output;
 	char		*nb;
@@ -93,5 +93,6 @@ char			*ft_fill_di_output(t_option opt, va_list *ap)
 	len = opt.precision - ft_nblen(arg);
 	nb = ft_fill_nb(opt, len, arg);
 	output = ft_fill_output(opt, nb, arg);
+	size[0] = ft_strlen(output);
 	return (output);
 }

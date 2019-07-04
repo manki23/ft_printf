@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 15:32:34 by manki             #+#    #+#             */
-/*   Updated: 2019/07/02 19:21:51 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 10:19:16 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	ft_display_option(t_option opt)
 {
 	ft_putstr("\n-------------------------\n");
-	ft_putstr("opt->minus = ");
+	ft_putstr("opt->flag = ");
+	ft_putchar(opt.flag);
+	ft_putstr("\nopt->minus = ");
 	ft_putstr(ft_lltoa(opt.minus));
 	ft_putstr("\nopt->plus = ");
 	ft_putstr(ft_lltoa(opt.plus));

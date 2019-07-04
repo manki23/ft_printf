@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 15:36:43 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 12:52:15 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 15:35:13 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ int		ft_nblen(long long n)
 		return (ft_nblen(n / 10) + ft_nblen(n % 10));
 }
 
-int		ft_unsigned_nblen(unsigned long long n)
+int		ft_unblen_base(unsigned long long n, char *base)
 {
-	if (n < 10)
+	unsigned long long	len;
+
+	len = ft_strlen(base);
+	if (n < len)
 		return (1);
 	else
-		return (ft_nblen(n / 10) + ft_nblen(n % 10));
+		return (ft_unblen_base(n / len, base) + ft_unblen_base(n % len, base));
 }
 
 void	ft_tr(char *s, char old, char neww)

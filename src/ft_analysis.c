@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 13:15:09 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 14:12:06 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,12 @@ static t_conv	g_tab[] =
 	{"u", &ft_fill_uoxx_output},
 	{"x", &ft_fill_uoxx_output},
 	{"X", &ft_fill_uoxx_output},
-	{"%", &ft_fill_pourcent_output},
+	{"%", &ft_fill_c_output},
 	{"c", &ft_fill_c_output},
 	{"s", &ft_fill_s_output},
 	{"p", &ft_fill_p_output},
 	{"f", &ft_fill_f_output}
 };
-
-void	ft_init_option(t_option *opt)
-{
-	opt->flag = '\0';
-	opt->minus = 0;
-	opt->plus = 0;
-	opt->zero = 0;
-	opt->space = 0;
-	opt->hashtag = 0;
-	opt->point = 0;
-	opt->width = 0;
-	opt->precision = 0;
-	opt->hh = 0;
-	opt->h = 0;
-	opt->l = 0;
-	opt->ll = 0;
-	opt->ld = 0;
-}
 
 int		ft_is_conv(char c)
 {
@@ -58,56 +40,7 @@ int		ft_is_conv(char c)
 	return (0);
 }
 
-int		ft_fill_length_mod(t_option *opt, char **p)
-{
-	int		inc;
-
-	inc = 0;
-	if (p[0][0] == 'h' && p[0][1] == 'h' && (inc = 2))
-		opt->hh += 1;
-	else if (p[0][0] == 'h' && p[0][1] != 'h' && (inc = 1))
-		opt->h += 1;
-	else if (p[0][0] == 'l' && p[0][1] == 'l' && (inc = 2))
-		opt->ll += 1;
-	else if (p[0][0] == 'l' && p[0][1] != 'l' && (inc = 1))
-		opt->l += 1;
-	else if (p[0][0] == 'L' && (inc = 1))
-		opt->ld += 1;
-	p[0] += inc;
-	return (1);
-}
-
-void	ft_fill_t_option(t_option *opt, char **p)
-{
-	while ((++p[0])[0] && ft_fill_length_mod(opt, p) && !ft_is_conv(p[0][0]))
-	{
-		if (p[0][0] == '-')
-			opt->minus++;
-		else if (p[0][0] == '+')
-			opt->plus++;
-		else if (p[0][0] == '0')
-			opt->zero++;
-		else if (p[0][0] == ' ')
-			opt->space++;
-		else if (p[0][0] == '#')
-			opt->hashtag++;
-		else if (!opt->point && ft_isdigit(p[0][0]))
-		{
-			opt->width = ft_atoi(p[0]);
-			p[0] += ft_nblen(ft_atoi(p[0])) - 1;
-		}
-		else if (p[0][0] == '.')
-			opt->point++;
-		else if (opt->point && ft_isdigit(p[0][0]))
-		{
-			opt->precision = ft_atoi(p[0]);
-			p[0] += ft_nblen(ft_atoi(p[0])) - 1;
-		}
-	}
-	opt->flag = p[0][0];
-}
-
-char	*ft_conv(char **p, va_list *ap)
+char	*ft_conv(char **p, va_list *ap, size_t *size)
 {
 	t_option	opt;
 	char		*output;
@@ -122,7 +55,7 @@ char	*ft_conv(char **p, va_list *ap)
 		{
 			if (p[0][0] == (g_tab + i)->c[0])
 			{
-				output = (g_tab + i)->fun(opt, ap);
+				output = (g_tab + i)->fun(opt, ap, size);
 				p[0]++;
 				return (output);
 			}

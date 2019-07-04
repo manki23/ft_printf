@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 16:12:09 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 14:57:25 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_option
 	int		ld;
 }					t_option;
 
-typedef char		*(*t_ft_conv)(t_option, va_list *);
+typedef char		*(*t_ft_conv)(t_option, va_list *, size_t *size);
 
 typedef struct		s_conv
 {
@@ -43,31 +43,37 @@ typedef struct		s_conv
 	t_ft_conv		fun;
 }					t_conv;
 
-typedef struct		s_output
+typedef struct		s_list
 {
-	char			*data;
-	size_t			size;
-	struct s_output	*next;
-}					t_output;
+	char			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
 
 int					ft_printf(const char *restrict format, ...);
 
-char				*ft_conv(char **p, va_list *ap);
+char				*ft_conv(char **p, va_list *ap, size_t *size);
+void				ft_fill_t_option(t_option *opt, char **p);
+int					ft_is_conv(char c);
+void				ft_init_option(t_option *opt);
+
+t_list				*ft_lstnew(char *content, size_t content_size);
+void				ft_lsadd(t_list **list, char *content, size_t c_size);
+int					ft_lstlen(t_list *list);
+size_t				ft_lst_content_size(t_list *list);
+void				ft_lstprint(t_list *list);
 
 int					ft_nblen(long long n);
-int					ft_unsigned_nblen(unsigned long long n);
+int					ft_unblen_base(unsigned long long n, char *base);
 void				ft_display_option(t_option opt);
-void				ft_init_option(t_option *opt);
 void				ft_tr(char *s, char old, char neww);
-void				ft_fill_t_option(t_option *opt, char **p);
 
-char				*ft_fill_di_output(t_option opt, va_list *ap);
-char				*ft_fill_uoxx_output(t_option opt, va_list *ap);
-char				*ft_fill_pourcent_output(t_option opt, va_list *ap);
-char				*ft_fill_c_output(t_option opt, va_list *ap);
-char				*ft_fill_s_output(t_option opt, va_list *ap);
-char				*ft_fill_p_output(t_option opt, va_list *ap);
-char				*ft_fill_f_output(t_option opt, va_list *ap);
+char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);
+char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *s);
+char				*ft_fill_c_output(t_option opt, va_list *ap, size_t *size);
+char				*ft_fill_s_output(t_option opt, va_list *ap, size_t *size);
+char				*ft_fill_p_output(t_option opt, va_list *ap, size_t *size);
+char				*ft_fill_f_output(t_option opt, va_list *ap, size_t *size);
 
 int					ft_atoi(const char *str);
 int					ft_isdigit(int c);

@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 15:03:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/03 15:58:07 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/04 16:42:47 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ static char			*ft_fill_str(t_option opt, char *arg)
 
 	if (opt.point && !opt.precision)
 		str = "";
-	else if (opt.precision && ft_strlen(arg) > (size_t)opt.precision)
+	else if (arg && opt.precision && ft_strlen(arg) > (size_t)opt.precision)
 	{
 		str = ft_strnew(opt.precision);
 		ft_memcpy(str, arg, opt.precision);
 	}
-	else
+	else if (arg)
 		str = arg;
+	else
+		str = "(null)";
 	return (str);
 }
 
@@ -48,16 +50,15 @@ static char			*ft_fill_output(t_option opt, char *str)
 	return (output);
 }
 
-char				*ft_fill_s_output(t_option opt, va_list *ap)
+char				*ft_fill_s_output(t_option opt, va_list *ap, size_t *size)
 {
 	char		*output;
 	char		*str;
-	int			len;
 	char		*arg;
 
 	arg = va_arg(*ap, char *);
-	len = opt.precision - ft_strlen(arg);
 	str = ft_fill_str(opt, arg);
 	output = ft_fill_output(opt, str);
+	size[0] = ft_strlen(output);
 	return (output);
 }
