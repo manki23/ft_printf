@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 15:36:43 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 15:35:13 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/05 11:02:11 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ void	ft_tr(char *s, char old, char neww)
 			s[0] = neww;
 		s++;
 	}
+}
+
+int		ft_ipower(int nb, int power)
+{
+	int		i;
+	int		nb_bis;
+
+	i = 1;
+	nb_bis = nb;
+	if (power < 0)
+		return (0);
+	else if (power == 0)
+		return (1);
+	while (i < power)
+	{
+		nb = nb * nb_bis;
+		i++;
+	}
+	return (nb);
 }

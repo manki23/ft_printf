@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 14:12:06 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/05 12:22:13 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*ft_conv(char **p, va_list *ap, size_t *size)
 	t_option	opt;
 	char		*output;
 	int			i;
+//	t_byte		tab[3];
+//	char		*opt;
 
 	while (p[0][0])
 	{

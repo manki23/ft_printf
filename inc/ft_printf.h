@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 14:57:25 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/05 11:41:18 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct		s_option
 	int		ll;
 	int		ld;
 }					t_option;
+
+typedef unsigned char	t_byte;
 
 typedef char		*(*t_ft_conv)(t_option, va_list *, size_t *size);
 
@@ -65,8 +67,10 @@ void				ft_lstprint(t_list *list);
 
 int					ft_nblen(long long n);
 int					ft_unblen_base(unsigned long long n, char *base);
-void				ft_display_option(t_option opt);
 void				ft_tr(char *s, char old, char neww);
+int					ft_ipower(int nb, int power);
+
+void				ft_display_option(t_option opt);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);
 char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *s);
