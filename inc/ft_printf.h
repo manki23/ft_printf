@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/05 11:41:18 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/09 14:56:16 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void				ft_fill_t_option(t_option *opt, char **p);
 int					ft_is_conv(char c);
 void				ft_init_option(t_option *opt);
 
+void				ft_add_bit(t_byte *tab, t_byte bit, t_byte at);
+t_byte				ft_read_bit(t_byte *tab, t_byte at);
+
 t_list				*ft_lstnew(char *content, size_t content_size);
 void				ft_lsadd(t_list **list, char *content, size_t c_size);
 int					ft_lstlen(t_list *list);
@@ -68,7 +71,7 @@ void				ft_lstprint(t_list *list);
 int					ft_nblen(long long n);
 int					ft_unblen_base(unsigned long long n, char *base);
 void				ft_tr(char *s, char old, char neww);
-int					ft_ipower(int nb, int power);
+double				ft_ipower(double nb, double power);
 
 void				ft_display_option(t_option opt);
 

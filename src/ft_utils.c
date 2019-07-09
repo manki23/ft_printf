@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 15:36:43 by manki             #+#    #+#             */
-/*   Updated: 2019/07/05 11:02:11 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/09 14:56:22 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_unblen_base(unsigned long long n, char *base)
 	else
 		return (ft_unblen_base(n / len, base) + ft_unblen_base(n % len, base));
 }
-
+#include <stdio.h>
 void	ft_tr(char *s, char old, char neww)
 {
 	while (s[0])
@@ -41,21 +41,27 @@ void	ft_tr(char *s, char old, char neww)
 	}
 }
 
-int		ft_ipower(int nb, int power)
+double	ft_ipower(double nb, double power)
 {
-	int		i;
-	int		nb_bis;
+	long long	i;
+	double		nb_bis;
 
-	i = 1;
-	nb_bis = nb;
-	if (power < 0)
-		return (0);
-	else if (power == 0)
+	if (power == 0)
 		return (1);
-	while (i < power)
+	else if (power > 0)
 	{
-		nb = nb * nb_bis;
-		i++;
+		nb_bis = nb;
+		i = 0;
+		while (++i < power)
+			nb = nb * nb_bis;
+	}
+	else if (power < 0)
+	{
+		nb = 1 / nb;
+		nb_bis = nb;
+		i = 0;
+		while (--i > power)
+			nb = nb * nb_bis;
 	}
 	return (nb);
 }

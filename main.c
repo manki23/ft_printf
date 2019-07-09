@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:01:53 by manki             #+#    #+#             */
-/*   Updated: 2019/07/05 13:52:21 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/09 14:21:49 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ int		main(int ac, char *av[])
 	//	rft = ft_printf("%.5X\n", 12);
 	//	printf("r = %d | rft = %d\n", r, rft);
 
-		double	nb;
-		nb = -12547.58;
+		double	nb, nb2;
+		nb2 = 263.3;
+		nb = -12.508;
 
-		ft_printf("space:% f\n", nb);
-		ft_printf("PI:%f\n", M_PI);
+		ft_printf("test:% .10f\n", nb2);
+		ft_printf("space:% .10f\n", nb);
+		ft_printf("PI:%.15f\n", M_PI);
 	/*	ft_printf("plus:%+f\n", nb);
 		ft_printf("hash:%#f\n", nb);
 		ft_printf("precision:%.2f\n", nb);
@@ -71,8 +73,9 @@ int		main(int ac, char *av[])
 		ft_printf("size + minus + plus + prec + hash:%-#+5.0f\n", nb);*/
 	ft_printf("------------------------\n");
 
-		dprintf(2, "space:% f\n", nb);
-		dprintf(2, "PI:%f\n", M_PI);
+		dprintf(2, "test:% .10f\n", nb2);
+		dprintf(2, "space:% .10f\n", nb);
+		dprintf(2, "PI:%.15f\n", M_PI);
 	/*	dprintf(2, "plus:%+f\n", nb);
 		dprintf(2, "hash:%#f\n", nb);
 		dprintf(2, "precision:%.2f\n", nb);
