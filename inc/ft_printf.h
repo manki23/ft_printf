@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/09 14:56:16 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/10 13:07:12 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ int					ft_unblen_base(unsigned long long n, char *base);
 void				ft_tr(char *s, char old, char neww);
 double				ft_ipower(double nb, double power);
 
+//void				ft_str_mul(char *s);
+//void				ft_str_div(char *s);
+t_byte				ft_is_max(char *bit_nb, int from, int to);
+t_byte				ft_is_null(char *bit_nb, int from, int to);
+char				*ft_traduct(char *nb, int op, double f);
+
 void				ft_display_option(t_option opt);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);
@@ -83,6 +89,7 @@ char				*ft_fill_p_output(t_option opt, va_list *ap, size_t *size);
 char				*ft_fill_f_output(t_option opt, va_list *ap, size_t *size);
 
 int					ft_atoi(const char *str);
+long long			ft_atoll(const char *str);
 int					ft_isdigit(int c);
 char				*ft_lltoa(long long n);
 char				*ft_lltoa_base(long long n, char base[]);

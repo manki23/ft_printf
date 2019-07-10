@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   ft_basics.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/26 15:36:43 by manki             #+#    #+#             */
-/*   Updated: 2019/07/09 14:56:22 by manki            ###   ########.fr       */
+/*   Created: 2019/07/10 13:04:16 by manki             #+#    #+#             */
+/*   Updated: 2019/07/10 13:04:20 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_unblen_base(unsigned long long n, char *base)
 	else
 		return (ft_unblen_base(n / len, base) + ft_unblen_base(n % len, base));
 }
-#include <stdio.h>
+
 void	ft_tr(char *s, char old, char neww)
 {
 	while (s[0])
