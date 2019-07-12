@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/10 13:07:12 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/12 11:26:59 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
+
+#define E_START 1
+#define E_END 11
+#define M_START 12
+#define M_END 63
+#define E_BIAS 1023
 
 typedef struct		s_option
 {
@@ -78,6 +85,7 @@ double				ft_ipower(double nb, double power);
 t_byte				ft_is_max(char *bit_nb, int from, int to);
 t_byte				ft_is_null(char *bit_nb, int from, int to);
 char				*ft_traduct(char *nb, int op, double f);
+unsigned long long	ft_mul2(char *nb, int i, int end);
 
 void				ft_display_option(t_option opt);
 
