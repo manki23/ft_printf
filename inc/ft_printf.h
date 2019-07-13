@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/12 11:26:59 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/13 13:26:52 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char				*ft_traduct(char *nb, int op, double f);
 unsigned long long	ft_mul2(char *nb, int i, int end);
 
 void				ft_display_option(t_option opt);
+void				ft_afficher_bit(char *str, int mod);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);
 char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *s);

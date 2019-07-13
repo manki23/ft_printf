@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/12 14:00:14 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/13 12:28:19 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,26 @@ char				*ft_traduct(char *nb, int op, double f)
 	char *res;
 	int zero;
 
-	res = nb;
-	while (op > 0)
+	zero = ft_is_null(nb, 0, ft_strlen(nb) - 1);
+	if (!zero)
 	{
-		res = ft_div2(res);
-		op--;
+		res = nb;
+		while (op > 0)
+		{
+			res = ft_div2(res);
+			op--;
+		}
+		while (res[0] == '0')
+			res++;
+		zero = 0;
+		f = f - (long long)f;
+		while ((f > 0 && f < 1) || (f < 0 && f > -1))
+		{
+			f *= 10;
+			if ((f > 0 && f < 1) || (f < 0 && f > -1))
+				res = ft_strjoin("0", res);
+		}
+		return (res);
 	}
-	while (res[0] == '0')
-		res++;
-	zero = 0;
-	f = f - (long long)f;
-	while ((f > 0 && f < 1) || (f < 0 && f > -1))
-	{
-		f *= 10;
-		if ((f > 0 && f < 1) || (f < 0 && f > -1))
-			res = ft_strjoin("0", res);
-	}
-	return (res);
+	return ("");
 }

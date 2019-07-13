@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/07/10 17:17:31 by manki            ###   ########.fr        #
+#    Updated: 2019/07/13 12:34:48 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ OBJLIB_PATH = ./obj
 SRC_NAME = ft_printf.c ft_analysis.c ft_basics.c ft_display.c \
 		   ft_fill_di_output.c ft_fill_uoxx_output.c \
 		   ft_fill_c_output.c ft_fill_s_output.c ft_option.c \
-		   ft_list.c ft_fill_f_output.c ft_fill_p_output.c ft_utils_f.c \
-		   ft_floats.c
+		   ft_list.c ft_fill_p_output.c ft_utils_f.c \
+		   ft_floats.c ft_afficher.c
 
 LIB_NAME = ft_atoi.c ft_isdigit.c ft_lltoa.c ft_lltoa_base.c ft_ulltoa.c \
 		   ft_ulltoa_base.c ft_memchr.c ft_memcpy.c ft_memset.c ft_putchar.c \
