@@ -6,13 +6,13 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/13 12:28:19 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 16:23:25 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
-#include <stdio.h>
-t_byte			ft_is_max(char *bit_nb, int from, int to)
+
+t_byte				ft_is_max(char *bit_nb, int from, int to)
 {
 	while (from <= to)
 	{
@@ -23,7 +23,7 @@ t_byte			ft_is_max(char *bit_nb, int from, int to)
 	return (1);
 }
 
-t_byte			ft_is_null(char *bit_nb, int from, int to)
+t_byte				ft_is_null(char *bit_nb, int from, int to)
 {
 	while (from <= to)
 	{
@@ -40,12 +40,17 @@ static char			*ft_div2(char *nb)
 	char	tmp[3];
 	int		x;
 	char	c;
+//	char	*tmp;
 
 	res = ft_strjoin("", "0");
-	while (nb[ft_strlen(nb) - 1])
+//	tmp = res;
+	while (ft_isdigit(nb[ft_strlen(nb) - 1]))
 	{
 		c = nb[ft_strlen(nb) - 1];
 		tmp[0] = '0' + ((c - '0') / 2);
+	//		ft_putstr("[");
+	//		ft_putchar(nb[ft_strlen(nb) - 1]);
+	//		ft_putstr("]");
 		tmp[1] = '\0';
 		if ((c - '0') % 2)
 		{
@@ -56,8 +61,10 @@ static char			*ft_div2(char *nb)
 			res[0] = '0' + x;
 		}
 		res = ft_strjoin(tmp, res);
+//		ft_strdel(&tmp);
 		nb[ft_strlen(nb) - 1] = '\0';
 	}
+//	ft_strdel(&nb);
 	return (res);
 }
 
@@ -77,8 +84,8 @@ unsigned long long	ft_mul2(char *nb, int i, int end)
 
 char				*ft_traduct(char *nb, int op, double f)
 {
-	char *res;
-	int zero;
+	char	*res;
+	int		zero;
 
 	zero = ft_is_null(nb, 0, ft_strlen(nb) - 1);
 	if (!zero)
@@ -86,6 +93,9 @@ char				*ft_traduct(char *nb, int op, double f)
 		res = nb;
 		while (op > 0)
 		{
+		//	ft_putstr("[");
+		//	ft_putstr(res);
+		//	ft_putstr("]\n");
 			res = ft_div2(res);
 			op--;
 		}

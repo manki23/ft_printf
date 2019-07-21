@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bitwise.c                                       :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/05 11:16:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/17 17:15:02 by manki            ###   ########.fr       */
+/*   Created: 2019/07/21 16:53:02 by manki             #+#    #+#             */
+/*   Updated: 2019/07/21 17:27:29 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void		ft_add_bit(t_byte *tab, t_byte bit, t_byte at)
+void	ft_lstdel(t_list **alst)
 {
-	if (bit)
-		tab[at / 8] |= 1 << (at & 7);
-	else
-		tab[at / 8] &= ~(1 << (at & 7));
-}
+	t_list	*tmp;
 
-t_byte		ft_read_bit(t_byte *tab, t_byte at)
-{
-	return ((tab[at / 8] & (1 << (at & 7))) >> (at & 7));
+	while (*alst)
+	{
+		free(alst[0]->content);
+		alst[0]->content = NULL;
+		tmp = alst[0];
+		alst[0] = alst[0]->next;
+		free(tmp);
+		tmp = NULL;
+	}
+	free(*alst);
+	*alst = NULL;
 }

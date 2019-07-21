@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/10 17:21:59 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 18:26:29 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 {
 	char	*zero;
 	char	*nb;
+	char	*tmp;
 
 	if (ft_nblen(arg) < opt.precision)
 	{
@@ -24,11 +25,16 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 		nb = ft_lltoa(arg);
 		if (arg < 0)
 		{
+			tmp = nb;
 			nb = ft_strjoin(zero, &nb[1]);
 			zero[0] = '-';
 			zero[1] = '\0';
+			ft_strdel(&tmp);
 		}
+		tmp = nb;
 		nb = ft_strjoin(zero, nb);
+		ft_strdel(&tmp);
+		ft_strdel(&zero);
 	}
 	else if (arg == 0 && opt.point && !opt.precision)
 		nb = "";
@@ -44,6 +50,7 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 {
 	char	*output;
+	char	*tmp;
 
 	if (opt.width > (int)ft_strlen(nb))
 	{
@@ -51,17 +58,21 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
 		if (!opt.minus && !opt.point && opt.zero)
 			ft_tr(output, ' ', '0');
+		tmp = output;
 		if (opt.minus)
 			output = ft_strjoin(nb, output);
 		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.point)
 				|| (!opt.point && opt.zero && arg < 0))
 		{
 			output = ft_strjoin(output, &nb[1]);
+			ft_strdel(&tmp);
+			tmp = output;
 			nb[1] = '\0';
 			output = ft_strjoin(nb, output);
 		}
 		else
 			output = ft_strjoin(output, nb);
+		ft_strdel(&tmp);
 	}
 	else
 		output = nb;

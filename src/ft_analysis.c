@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/08 11:21:26 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 14:55:41 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,13 @@ char	*ft_conv(char **p, va_list *ap, size_t *size)
 	t_option	opt;
 	char		*output;
 	int			i;
-//	t_byte		tab[3];
-//	char		*opt;
 
 	while (p[0][0])
 	{
 		ft_init_option(&opt);
 		ft_fill_t_option(&opt, p);
 		i = -1;
-		while (g_tab + ++i)
+		while (++i < 11)
 		{
 			if (p[0][0] == (g_tab + i)->c[0])
 			{
@@ -62,7 +60,8 @@ char	*ft_conv(char **p, va_list *ap, size_t *size)
 				return (output);
 			}
 		}
-		return ("Error\n");
+		size[0] = 0;
+		return ("");
 	}
 	return (NULL);
 }

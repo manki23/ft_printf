@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 13:00:08 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 13:49:19 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 18:11:55 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void		ft_analyze(char *ptr, t_list *out, va_list *ap)
 	while (ptr && ptr[0] == '%')
 	{
 		content = ft_conv(&ptr, ap, &size);
-		ft_lsadd(&out, content, size);
+		if (size > 0)
+			ft_lsadd(&out, content, size);
 		if (!(ptr2 = ft_strchr(ptr, '%')))
 			ft_lsadd(&out, ptr, ft_strlen(ptr));
 		else
@@ -61,6 +62,7 @@ int				ft_printf(const char *restrict format, ...)
 			ft_analyze(ptr, out, &ap);
 			ft_lstprint(out);
 			ret = ft_lst_content_size(out);
+			ft_lstdel(&out);
 		}
 	}
 	return (ret);

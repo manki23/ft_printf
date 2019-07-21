@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bitwise.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/05 11:16:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/17 17:15:02 by manki            ###   ########.fr       */
+/*   Created: 2017/11/12 12:48:54 by manki             #+#    #+#             */
+/*   Updated: 2019/07/19 12:45:42 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void		ft_add_bit(t_byte *tab, t_byte bit, t_byte at)
+char	*ft_strljoin(char const *s1, char const *s2, int s1_len, int s2_len)
 {
-	if (bit)
-		tab[at / 8] |= 1 << (at & 7);
-	else
-		tab[at / 8] &= ~(1 << (at & 7));
-}
+	char	*fresh;
+	int		i;
+	int		j;
 
-t_byte		ft_read_bit(t_byte *tab, t_byte at)
-{
-	return ((tab[at / 8] & (1 << (at & 7))) >> (at & 7));
+	if (!s1 || !s2 || !(fresh = (char *)malloc(sizeof(char) * (s1_len + s2_len
+						+ 1))))
+		return (NULL);
+	i = -1;
+	while (++i < s1_len)
+		fresh[i] = s1[i];
+	j = -1;
+	while (++j < s2_len)
+	{
+		fresh[i] = s2[j];
+		i++;
+	}
+	fresh[i] = '\0';
+	return (fresh);
 }

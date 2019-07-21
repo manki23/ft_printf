@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 11:01:53 by manki             #+#    #+#             */
-/*   Updated: 2019/07/13 13:32:08 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 18:43:17 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,44 @@
 #include <float.h>
 #include <math.h>
 
-/*
-   ft_printf("------------------------------------------------------\n");
-   */
 int		main(int ac, char *av[])
 {
+
 	ac--;
 	av++;
-
-	long double	nb;
-	//nb = -8965421.12356432156;
-	nb = LDBL_MAX;
-	//nb = M_PI;
-
-	ft_printf("big prec:%.20Lf\n", nb);
-/*	ft_printf("size + 0 + prec:%05.3Lf\n", nb);
-	ft_printf("size + minus + prec:%-5.3Lf\n", nb);
-	ft_printf("size + plus + 0 + prec:%+05.3Lf\n", nb);
-	ft_printf("size + espace + zero + prec:%0 5.3Lf\n", nb);
-	ft_printf("size + espace + zero + prec:% 05.3Lf\n", nb);
-	ft_printf("size + minus + plus + prec:%-+5.3Lf\n", nb);*/
-   ft_printf("------------------------------------------------------\n");
-
-	dprintf(2, "big prec:%.20Lf\n", nb);
-/*	dprintf(2, "size + 0 + prec:%05.3Lf\n", nb);
-	dprintf(2, "size + minus + prec:%-5.3Lf\n", nb);
-	dprintf(2, "size + plus + 0 + prec:%+05.3Lf\n", nb);
-	dprintf(2, "size + espace + zero + prec:%0 5.3Lf\n", nb);
-	dprintf(2, "size + espace + zero + prec:% 05.3Lf\n", nb);
-	dprintf(2, "size + minus + plus + prec:%-+5.3Lf\n", nb);
-*/
+	ft_printf("\n------------------------------------------------------\n");
+	ft_printf("\n------------------------------------------------------\n");
+//	ft_printf("\n");
+	ft_printf("%%\n");
+//	ft_printf("%d\n", 42);
+//	ft_printf("%d%d\n", 42, 41);
+//	ft_printf("%d%d%d\n", 42, 43, 44);
+//	ft_printf("%ld\n", 2147483647);
+//	ft_printf("%lld\n", 9223372036854775807);
+//	ft_printf("%x\n", 505);
+//	ft_printf("%X\n", 505);
+//	ft_printf("%p\n", &ft_printf);
+//	ft_printf("%20.15d\n", 54321);
+//	ft_printf("%-10d\n", 3);
+//	ft_printf("% d\n", 3);
+//	ft_printf("%+d\n", 3);
+//	ft_printf("%010d\n", 1);
+//	ft_printf("%hhd\n", 0);
+//	ft_printf("%jd\n", 9223372036854775807);
+//	ft_printf("%zd\n", 4294967295);
+//	ft_printf("%\n");
+//	ft_printf("%U\n", 4294967295);
+//	ft_printf("%u\n", 4294967295);
+//	ft_printf("%o\n", 40);
+//	ft_printf("%%#08x\n", 42);
+//	ft_printf("%x\n", 1000);
+//	ft_printf("%#X\n", 1000);
+//	ft_printf("%s\n", NULL);
+//	ft_printf("%S\n", L"ݗݜशব");
+//	ft_printf("%s%s\n", "test", "test");
+//	ft_printf("%s%s%s\n", "test", "test", "test");
+//	ft_printf("%C\n", 15000);
+	ft_printf("\n------------------------------------------------------\n");
+	ft_printf("\n------------------------------------------------------\n");
 	return (0);
 }

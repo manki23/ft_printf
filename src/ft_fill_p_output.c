@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 11:03:01 by manki             #+#    #+#             */
-/*   Updated: 2019/07/08 11:18:24 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 14:24:26 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char		*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 	char	*zero;
 	char	*nb;
 	char	*base;
+	char	*tmp;
 
 	base = "0123456789abcdef";
 	if (ft_unblen_base(arg, base) < opt.precision)
@@ -24,18 +25,22 @@ static char		*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 		zero = ft_strnew(len);
 		ft_memset(zero, '0', len);
 		nb = ft_strjoin(zero, ft_ulltoa_base(arg, base));
+		ft_strdel(&zero);
 	}
 	else if (arg == 0 && opt.point && !opt.precision)
 		nb = "";
 	else
 		nb = ft_ulltoa_base(arg, base);
+	tmp = nb;
 	nb = ft_strjoin("0x", nb);
+	ft_strdel(&tmp);
 	return (nb);
 }
 
 static char		*ft_fill_output(t_option opt, char *nb)
 {
 	char	*output;
+	char	*tmp;
 
 	if (opt.width > (int)ft_strlen(nb))
 	{
@@ -43,17 +48,20 @@ static char		*ft_fill_output(t_option opt, char *nb)
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
 		if (!opt.minus && !opt.point && opt.zero)
 			ft_tr(output, ' ', '0');
+		tmp = output;
 		if (opt.minus)
 			output = ft_strjoin(nb, output);
 		else
 			output = ft_strjoin(output, nb);
+		ft_strdel(&tmp);
+		ft_strdel(&nb);
 	}
 	else
 		output = nb;
 	return (output);
 }
 
-char	*ft_fill_p_output(t_option opt, va_list *ap, size_t *size)
+char			*ft_fill_p_output(t_option opt, va_list *ap, size_t *size)
 {
 	void				*arg;
 	char				*output;

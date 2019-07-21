@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 14:05:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 14:16:41 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 15:23:19 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,27 @@ static void		ft_(t_option *opt, char **p)
 	}
 }
 
+static int		ft_check(char c)
+{
+	char	*tab;
+	int		i;
+
+	tab = ft_strjoin("", "lLh#0-+ .");
+	i = 0;
+	while (tab[++i])
+		if (c == tab[i] || ft_isdigit(c))
+		{
+			ft_strdel(&tab);
+			return (1);
+		}
+	ft_strdel(&tab);
+	return (0);
+}
+
 void			ft_fill_t_option(t_option *opt, char **p)
 {
-	while ((++p[0])[0] && ft_fill_length_mod(opt, p) && !ft_is_conv(p[0][0]))
+	while ((++p[0])[0] && ft_fill_length_mod(opt, p) && !ft_is_conv(p[0][0]) &&
+			ft_check(p[0][0]))
 	{
 		if (p[0][0] == '-')
 			opt->minus++;

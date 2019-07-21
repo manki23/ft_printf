@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 15:03:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/04 16:42:47 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/21 15:18:59 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,18 @@ static char			*ft_fill_str(t_option opt, char *arg)
 	else if (arg)
 		str = arg;
 	else
-		str = "(null)";
+	{
+		str = ft_strjoin("", "(null)");
+		if (opt.precision && ft_strlen(str) > (size_t)opt.precision)
+			str[opt.precision] = '\0';
+	}
 	return (str);
 }
 
 static char			*ft_fill_output(t_option opt, char *str)
 {
 	char	*output;
+	char	*tmp;
 
 	if ((size_t)opt.width > ft_strlen(str))
 	{
@@ -40,10 +45,12 @@ static char			*ft_fill_output(t_option opt, char *str)
 		ft_memset(output, ' ', opt.width - ft_strlen(str));
 		if (!opt.minus && !opt.point && opt.zero)
 			ft_tr(output, ' ', '0');
+		tmp = output;
 		if (opt.minus)
 			output = ft_strjoin(str, output);
 		else
 			output = ft_strjoin(output, str);
+		ft_strdel(&tmp);
 	}
 	else
 		output = str;
