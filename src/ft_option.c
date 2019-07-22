@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 14:05:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 15:23:19 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 17:37:35 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,33 @@
 
 void			ft_init_option(t_option *opt)
 {
-	opt->flag = '\0';
-	opt->minus = 0;
-	opt->plus = 0;
-	opt->zero = 0;
-	opt->space = 0;
-	opt->hashtag = 0;
-	opt->point = 0;
+	opt->flag = 0;
+	opt->option = 0;
+	opt->modif = 0;
 	opt->width = 0;
 	opt->precision = 0;
-	opt->hh = 0;
-	opt->h = 0;
-	opt->l = 0;
-	opt->ll = 0;
-	opt->ld = 0;
 }
 
 static int		ft_fill_length_mod(t_option *opt, char **p)
 {
-	int		inc;
+	int		ret;
 
-	inc = 0;
-	if (p[0][0] == 'h' && p[0][1] == 'h' && (inc = 2))
-		opt->hh += 1;
-	else if (p[0][0] == 'h' && p[0][1] != 'h' && (inc = 1))
-		opt->h += 1;
-	else if (p[0][0] == 'l' && p[0][1] == 'l' && (inc = 2))
-		opt->ll += 1;
-	else if (p[0][0] == 'l' && p[0][1] != 'l' && (inc = 1))
-		opt->l += 1;
-	else if (p[0][0] == 'L' && (inc = 1))
-		opt->ld += 1;
-	p[0] += inc;
-	return (1);
-}
-
-static void		ft_(t_option *opt, char **p)
-{
-	if (!opt->point && ft_isdigit(p[0][0]))
+	ret = 0;
+	if (ft_read(&(opt->modif), 0) && p[0][0] == 'h')
 	{
-		opt->width = ft_atoi(p[0]);
-		p[0] += ft_nblen(ft_atoi(p[0])) - 1;
+		ft_add_bit(&(opt->modif), 1, 1);
+		ft_add_bit(&(opt->modif), 0, 0);
+		ret += 1;
 	}
-	else if (p[0][0] == '.')
-		opt->point++;
-	else if (opt->point && ft_isdigit(p[0][0]))
+	else if (ft_read(&(opt->modif), 2) && p[0][0] == 'l')
 	{
-		opt->precision = ft_atoi(p[0]);
-		p[0] += ft_nblen(ft_atoi(p[0])) - 1;
+		ft_add_bit(&(opt->modif), 1, 3);
+		ft_add_bit(&(opt->modif), 0, 2);
+		ret += 1;
 	}
+	else
+		ret = ft_fill_opt(&(opt->modif), p[0][0], "hhllL");
+	return (ret);
 }
 
 static int		ft_check(char c)
@@ -71,7 +49,7 @@ static int		ft_check(char c)
 	int		i;
 
 	tab = ft_strjoin("", "lLh#0-+ .");
-	i = 0;
+	i = -1;
 	while (tab[++i])
 		if (c == tab[i] || ft_isdigit(c))
 		{
@@ -84,21 +62,21 @@ static int		ft_check(char c)
 
 void			ft_fill_t_option(t_option *opt, char **p)
 {
-	while ((++p[0])[0] && ft_fill_length_mod(opt, p) && !ft_is_conv(p[0][0]) &&
-			ft_check(p[0][0]))
+		p[0]++;
+	while (p[0][0] && !ft_is_conv(p[0][0]) && ft_check(p[0][0]))
 	{
-		if (p[0][0] == '-')
-			opt->minus++;
-		else if (p[0][0] == '+')
-			opt->plus++;
-		else if (p[0][0] == '0')
-			opt->zero++;
-		else if (p[0][0] == ' ')
-			opt->space++;
-		else if (p[0][0] == '#')
-			opt->hashtag++;
-		else
-			ft_(opt, p);
+		p[0] += ft_fill_length_mod(opt, p);
+		if (!ft_read(&(opt->option), 5) && ft_isdigit(p[0][0]) && p[0][0] != '0')
+		{
+			opt->width = ft_atoi(p[0]);
+			p[0] += ft_nblen(ft_atoi(p[0]));
+		}
+		else if (ft_read(&(opt->option), 5) && ft_isdigit(p[0][0]))
+		{
+			opt->precision = ft_atoi(p[0]);
+			p[0] += ft_nblen(ft_atoi(p[0]));
+		}
+		p[0] += ft_fill_opt(&(opt->option), p[0][0], "-+0 #.");
 	}
-	opt->flag = p[0][0];
+	ft_fill_opt(&(opt->flag), p[0][0], "%uoxX");
 }

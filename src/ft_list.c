@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 16:32:07 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 15:22:50 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 13:37:02 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,16 @@ size_t		ft_lst_content_size(t_list *list)
 	return (ret);
 }
 
-void		ft_lstprint(t_list *list)
+size_t		ft_lstprint(t_list list[])
 {
-	size_t	i;
-	t_list	*tmp;
+	size_t	ret;
 
-	tmp = list;
-	while (tmp)
+	ret = 0;
+	while (list)
 	{
-		i = -1;
-		while (++i < tmp->content_size)
-			ft_putchar(tmp->content[i]);
-		tmp = tmp->next;
+		write(1, list->content, list->content_size);
+		ret += list->content_size;
+		list = list->next;
 	}
+	return (ret);
 }

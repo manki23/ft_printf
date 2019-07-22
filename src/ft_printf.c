@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 13:00:08 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 18:11:55 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 13:36:57 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int				ft_printf(const char *restrict format, ...)
 	char		*ptr;
 	t_list		*out;
 
-	ret = ft_strlen(format);
-	if (ret > 0)
+	ret = 0;
+	if (format && ((ret = ft_strlen(format)) > 0))
 	{
 		if (!(ptr = ft_strchr(format, '%')))
 			ft_putstr(format);
@@ -60,8 +60,7 @@ int				ft_printf(const char *restrict format, ...)
 				return (-1);
 			va_start(ap, format);
 			ft_analyze(ptr, out, &ap);
-			ft_lstprint(out);
-			ret = ft_lst_content_size(out);
+			ret = ft_lstprint(out);
 			ft_lstdel(&out);
 		}
 	}

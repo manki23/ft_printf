@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 18:26:29 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 15:39:09 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 		ft_strdel(&tmp);
 		ft_strdel(&zero);
 	}
-	else if (arg == 0 && opt.point && !opt.precision)
+	else if (arg == 0 && ft_read(&(opt.option), 5) && !opt.precision)
 		nb = "";
 	else
 		nb = ft_lltoa(arg);
-	if (opt.plus && arg >= 0)
+	if (ft_read(&(opt.option), 1) && arg >= 0)
 		nb = ft_strjoin("+", nb);
-	else if (opt.space && arg >= 0)
+	else if (ft_read(&(opt.option), 3) && arg >= 0)
 		nb = ft_strjoin(" ", nb);
 	return (nb);
 }
@@ -50,29 +50,32 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 {
 	char	*output;
-	char	*tmp;
+///	char	*tmp;
 
 	if (opt.width > (int)ft_strlen(nb))
 	{
 		output = ft_strnew(opt.width - ft_strlen(nb));
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!opt.minus && !opt.point && opt.zero)
+		if (!ft_read(&(opt.option), 0) && !ft_read(&(opt.option), 5) &&
+				ft_read(&(opt.option), 2))
 			ft_tr(output, ' ', '0');
-		tmp = output;
-		if (opt.minus)
+///		tmp = output;
+		if (ft_read(&(opt.option), 0))
 			output = ft_strjoin(nb, output);
-		else if (((opt.plus || opt.space) && arg >= 0 && opt.zero && !opt.point)
-				|| (!opt.point && opt.zero && arg < 0))
+		else if (((ft_read(&(opt.option), 1) || ft_read(&(opt.option), 3)) &&
+					arg >= 0 && ft_read(&(opt.option), 2) && 
+					!ft_read(&(opt.option), 5)) || (!ft_read(&(opt.option), 5)
+					&& ft_read(&(opt.option), 2) && arg < 0))
 		{
 			output = ft_strjoin(output, &nb[1]);
-			ft_strdel(&tmp);
-			tmp = output;
+///			ft_strdel(&tmp);
+///			tmp = output;
 			nb[1] = '\0';
 			output = ft_strjoin(nb, output);
 		}
 		else
 			output = ft_strjoin(output, nb);
-		ft_strdel(&tmp);
+///		ft_strdel(&tmp);
 	}
 	else
 		output = nb;
@@ -81,9 +84,9 @@ static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 
 static int		ft_if_short_mod(t_option opt, int arg)
 {
-	if (opt.hh)
+	if (ft_read(&(opt.modif), 1))
 		return ((char)arg);
-	else if (opt.h)
+	else if (ft_read(&(opt.modif), 0))
 		return ((short)arg);
 	else
 		return (arg);
@@ -97,9 +100,9 @@ char			*ft_fill_di_output(t_option opt, va_list *ap, size_t *size)
 	long long	arg;
 
 	arg = va_arg(*ap, long long);
-	if (opt.l)
+	if (ft_read(&(opt.modif), 2))
 		arg = (long)arg;
-	else if (!opt.ll && !opt.l)
+	else if (!ft_read(&(opt.modif), 3) && !ft_read(&(opt.modif), 2))
 		arg = ft_if_short_mod(opt, arg);
 	len = opt.precision - ft_nblen(arg);
 	nb = ft_fill_nb(opt, len, arg);

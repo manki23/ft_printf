@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 17:01:33 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 17:43:56 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,16 @@
 # define E_BIAS 1023
 # define BUF 8
 
+typedef unsigned char	t_byte;
+
 typedef struct		s_option
 {
-	char	flag;
-	int		minus;
-	int		plus;
-	int		zero;
-	int		space;
-	int		hashtag;
-	int		point;
+	t_byte	flag;
+	t_byte	option;
+	t_byte	modif;
 	int		width;
 	int		precision;
-	int		hh;
-	int		h;
-	int		l;
-	int		ll;
-	int		ld;
 }					t_option;
-
-typedef unsigned char	t_byte;
 
 typedef char		*(*t_ft_conv)(t_option, va_list *, size_t *size);
 
@@ -75,13 +66,14 @@ int					ft_is_conv(char c);
 void				ft_init_option(t_option *opt);
 
 void				ft_add_bit(t_byte *tab, t_byte bit, t_byte at);
-t_byte				ft_read_bit(t_byte *tab, t_byte at);
+t_byte				ft_read(t_byte tab[], t_byte at);
+t_byte				ft_fill_opt(t_byte *dst, char src, char tab[]);
 
 t_list				*ft_lstnew(char *content, size_t content_size);
 void				ft_lsadd(t_list **list, char *content, size_t c_size);
 int					ft_lstlen(t_list *list);
 size_t				ft_lst_content_size(t_list *list);
-void				ft_lstprint(t_list *list);
+size_t				ft_lstprint(t_list list[]);
 void				ft_lstdel(t_list **alst);
 
 int					ft_nblen(long long n);
@@ -94,8 +86,8 @@ t_byte				ft_is_null(char *bit_nb, int from, int to);
 char				*ft_traduct(char *nb, int op, double f);
 unsigned long long	ft_mul2(char *nb, int i, int end);
 
-void				ft_display_option(t_option opt);
 void				ft_afficher_bit(char *str, int mod);
+void				ft_display(t_option opt);
 
 char				*ft_float_to_str(double arg);
 void				ft_round(char *mantissa, int precision);
