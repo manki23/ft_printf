@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 15:39:09 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 19:20:29 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 {
 	char	*zero;
 	char	*nb;
-	char	*tmp;
 
 	if (ft_nblen(arg) < opt.precision)
 	{
@@ -25,24 +24,19 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 		nb = ft_lltoa(arg);
 		if (arg < 0)
 		{
-			tmp = nb;
 			nb = ft_strjoin(zero, &nb[1]);
 			zero[0] = '-';
 			zero[1] = '\0';
-			ft_strdel(&tmp);
 		}
-		tmp = nb;
 		nb = ft_strjoin(zero, nb);
-		ft_strdel(&tmp);
-		ft_strdel(&zero);
 	}
-	else if (arg == 0 && ft_read(&(opt.option), 5) && !opt.precision)
+	else if (arg == 0 && (opt.option & POINT) && !opt.precision)
 		nb = "";
 	else
 		nb = ft_lltoa(arg);
-	if (ft_read(&(opt.option), 1) && arg >= 0)
+	if ((opt.option & PLUS) && arg >= 0)
 		nb = ft_strjoin("+", nb);
-	else if (ft_read(&(opt.option), 3) && arg >= 0)
+	else if ((opt.option & SPACE) && arg >= 0)
 		nb = ft_strjoin(" ", nb);
 	return (nb);
 }
@@ -50,32 +44,25 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 static char		*ft_fill_output(t_option opt, char *nb, long long arg)
 {
 	char	*output;
-///	char	*tmp;
 
 	if (opt.width > (int)ft_strlen(nb))
 	{
 		output = ft_strnew(opt.width - ft_strlen(nb));
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!ft_read(&(opt.option), 0) && !ft_read(&(opt.option), 5) &&
-				ft_read(&(opt.option), 2))
+		if (!(opt.option & MINUS) && !(opt.option & POINT) && (opt.option & ZERO))
 			ft_tr(output, ' ', '0');
-///		tmp = output;
-		if (ft_read(&(opt.option), 0))
+		if (opt.option & MINUS)
 			output = ft_strjoin(nb, output);
-		else if (((ft_read(&(opt.option), 1) || ft_read(&(opt.option), 3)) &&
-					arg >= 0 && ft_read(&(opt.option), 2) && 
-					!ft_read(&(opt.option), 5)) || (!ft_read(&(opt.option), 5)
-					&& ft_read(&(opt.option), 2) && arg < 0))
+		else if ((((opt.option & PLUS) || (opt.option & SPACE)) && arg >= 0 &&
+					(opt.option & ZERO) && !(opt.option & POINT)) ||
+				(!(opt.option & POINT) && (opt.option & ZERO) && arg < 0))
 		{
 			output = ft_strjoin(output, &nb[1]);
-///			ft_strdel(&tmp);
-///			tmp = output;
 			nb[1] = '\0';
 			output = ft_strjoin(nb, output);
 		}
 		else
 			output = ft_strjoin(output, nb);
-///		ft_strdel(&tmp);
 	}
 	else
 		output = nb;

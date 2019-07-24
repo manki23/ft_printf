@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 15:03:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 17:22:06 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 19:50:57 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char			*ft_fill_str(t_option opt, char *arg)
 {
 	char	*str;
 
-	if (ft_read(&(opt.option), 5) && !opt.precision)
+	if ((opt.option & POINT) && !opt.precision)
 		str = "";
 	else if (arg && opt.precision && ft_strlen(arg) > (size_t)opt.precision)
 	{
@@ -43,11 +43,10 @@ static char			*ft_fill_output(t_option opt, char *str)
 	{
 		output = ft_strnew(opt.width - ft_strlen(str));
 		ft_memset(output, ' ', opt.width - ft_strlen(str));
-		if (!ft_read(&(opt.option), 0) && !ft_read(&(opt.option), 5) &&
-				ft_read(&(opt.option), 2))
+		if (!(opt.option & MINUS) && !(opt.option & POINT) && (opt.option & ZERO))
 			ft_tr(output, ' ', '0');
 		tmp = output;
-		if (ft_read(&(opt.option), 0))
+		if (opt.option & MINUS)
 			output = ft_strjoin(str, output);
 		else
 			output = ft_strjoin(output, str);

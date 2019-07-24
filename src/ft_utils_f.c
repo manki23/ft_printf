@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 16:23:25 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/24 13:39:33 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,13 @@ static char			*ft_div2(char *nb)
 	char	tmp[3];
 	int		x;
 	char	c;
-//	char	*tmp;
 
-	res = ft_strjoin("", "0");
-//	tmp = res;
+	res = ft_memalloc(2);
+	res[0] = '0';
 	while (ft_isdigit(nb[ft_strlen(nb) - 1]))
 	{
 		c = nb[ft_strlen(nb) - 1];
 		tmp[0] = '0' + ((c - '0') / 2);
-	//		ft_putstr("[");
-	//		ft_putchar(nb[ft_strlen(nb) - 1]);
-	//		ft_putstr("]");
 		tmp[1] = '\0';
 		if ((c - '0') % 2)
 		{
@@ -60,15 +56,14 @@ static char			*ft_div2(char *nb)
 			x += 5;
 			res[0] = '0' + x;
 		}
+
 		res = ft_strjoin(tmp, res);
-//		ft_strdel(&tmp);
 		nb[ft_strlen(nb) - 1] = '\0';
 	}
-//	ft_strdel(&nb);
 	return (res);
 }
 
-unsigned long long	ft_mul2(char *nb, int i, int end)
+unsigned long long	ft_mul2_trash(char *nb, int i, int end)
 {
 	unsigned long long	res;
 
@@ -82,20 +77,104 @@ unsigned long long	ft_mul2(char *nb, int i, int end)
 	return (res);
 }
 
+char				*ft_mul2_traduct(char *nb, int i, int end)
+{
+	char	*res;
+	char	*tmp;
+	int		nb_len;
+	int		zero;
+
+	zero = ft_is_null(nb, 1, ft_strlen(nb) - 1);
+	if (!zero)
+	{
+		nb_len = BUF * CHAR_BIT;
+		if (!(res = ft_memalloc(nb_len)))
+			return (NULL);
+		if (i <= nb_len && end <= nb_len)
+		{
+			while (++i <= end)
+			{
+				if (nb[i] == '1')
+				{
+					tmp = ft_strpower("2", end - i);
+					res = ft_stradd(res, tmp, ft_strlen(res), ft_strlen(tmp));
+				}
+			}
+		}
+		else if (end > M_END)
+		{
+			end -= E_END;
+			while (++i <= M_END)
+			{
+				end--;
+				if (nb[i] == '1')
+				{
+					tmp = ft_strpower("2", end);
+					res = ft_stradd(res, tmp, ft_strlen(res), ft_strlen(tmp));
+				}
+			}
+		}
+		return (res);
+	}
+	return ("0");
+}
+
+char				*ft_newtrad(char *f_str, int index)
+{
+	char	*res;
+	char	*tmp;
+	int		tmp_len;
+	int		zero;
+	int		i;
+
+	zero = ft_is_null(f_str, 1, ft_strlen(f_str));
+	if (!zero)
+	{
+		i = 0;
+		res = ft_memalloc(2);
+		res[0] = '0';
+		while (i + index <= (int)ft_strlen(f_str))
+		{
+			if (f_str[index + i] == '1')
+			{
+			//	if (tmp_len > 0)
+			//		ft_strdel(tmp);
+				tmp = ft_memalloc(3);
+				tmp[0] = '1';
+				tmp_len = -1;
+				while (++tmp_len <= i)
+					tmp = ft_strdivby2(tmp, tmp_len + 1);
+/*				ft_putstr("(");
+				ft_putstr(tmp);
+				ft_putstr(")\n");
+				ft_putstr("[");
+				ft_putstr(res);
+				ft_putstr("]\n");*/
+				res = ft_leftadd(res, tmp, ft_strlen(res), tmp_len + 1);
+			}
+			i++;
+		}
+		return (res);
+	}
+	return ("");
+}
+/*
+				ft_putstr("(");
+				ft_putstr(tmp);
+				ft_putstr(")\n");
+				*/
+
 char				*ft_traduct(char *nb, int op, double f)
 {
 	char	*res;
 	int		zero;
 
-	zero = ft_is_null(nb, 0, ft_strlen(nb) - 1);
+	zero = ft_is_null(nb, 1, ft_strlen(nb) - 1);
 	if (!zero)
 	{
 		res = nb;
 		while (op > 0)
 		{
-		//	ft_putstr("[");
-		//	ft_putstr(res);
-		//	ft_putstr("]\n");
 			res = ft_div2(res);
 			op--;
 		}

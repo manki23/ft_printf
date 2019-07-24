@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 17:43:56 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/24 18:56:01 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@
 # define M_END 63
 # define E_BIAS 1023
 # define BUF 8
+
+# define EMPT 0x0000
+# define MINUS 0b00000001
+# define PLUS 0b00000010
+# define ZERO 0b00000100
+# define SPACE 0b00001000
+# define HASH 0b00010000
+# define POINT 0b00100000
+
+# define H_pourcent 0b00000001
+# define HH_u 0b00000010
+# define L_o 0b00000100
+# define LL_x 0b00001000
+# define LD_X 0b00010000
 
 typedef unsigned char	t_byte;
 
@@ -80,11 +94,21 @@ int					ft_nblen(long long n);
 int					ft_unblen_base(unsigned long long n, char *base);
 void				ft_tr(char *s, char old, char neww);
 double				ft_ipower(double nb, double power);
+char				*ft_strpower(char *nb, int power);
 
 t_byte				ft_is_max(char *bit_nb, int from, int to);
 t_byte				ft_is_null(char *bit_nb, int from, int to);
 char				*ft_traduct(char *nb, int op, double f);
-unsigned long long	ft_mul2(char *nb, int i, int end);
+unsigned long long	ft_mul2_trash(char *nb, int i, int end);
+char				*ft_mul2_traduct(char *nb, int i, int end);
+size_t				ft_max(size_t a, size_t b);
+char				*ft_stradd(char *a, char *b, size_t a_len, size_t b_len);
+char				*ft_leftadd(char *a, char *b, size_t a_len, size_t b_len);
+char				*ft_strmul(char *a, char *b, size_t a_len, size_t b_len);
+char				*ft_strdivby2(char *a, size_t a_len);
+char				*ft_newtrad(char *f_str, int index);
+char				*ft_putdot(char *str, size_t str_len, int position);
+char				*ft_charcat(char c, char *str, int len);
 
 void				ft_afficher_bit(char *str, int mod);
 void				ft_display(t_option opt);
@@ -92,6 +116,7 @@ void				ft_display(t_option opt);
 char				*ft_float_to_str(double arg);
 void				ft_round(char *mantissa, int precision);
 char				*ft_round2(char *nb, int len);
+char				*ft_roundd(char *nb, int pos, int *dot_pos, int precision);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);
 char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *s);
@@ -108,8 +133,10 @@ char				*ft_lltoa(long long n);
 char				*ft_lltoa_base(long long n, char base[]);
 char				*ft_ulltoa(unsigned long long n);
 char				*ft_ulltoa_base(unsigned long long n, char base[]);
+void				*ft_memalloc(size_t size);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
+void				ft_memdel(void **ap);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
@@ -120,6 +147,11 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strljoin(char const *s1, char const *s2, int a, int b);
 size_t				ft_strlen(const char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
+char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_strnew(size_t size);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
+char				*ft_strrev(char *s);
+void				*ft_realloc(void *ptr, size_t size);
+int					ft_dbl_len(long double nb);
+
 #endif

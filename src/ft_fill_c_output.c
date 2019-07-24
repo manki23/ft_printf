@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 14:33:19 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 17:23:49 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/22 19:24:59 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char			*ft_fill_c_output(t_option opt, va_list *ap, size_t *size)
 	unsigned char	arg[2];
 	char			*output;
 
-	if (ft_read(&(opt.flag), 0))
+	if (opt.flag & H_pourcent)
 		arg[0] = '%';
 	else
 		arg[0] = va_arg(*ap, int);

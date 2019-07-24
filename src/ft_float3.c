@@ -1,127 +1,75 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_floats.c                                        :+:      :+:    :+:   */
+/*   ft_float3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/10 17:11:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/24 22:15:39 by manki            ###   ########.fr       */
+/*   Created: 2019/07/23 18:34:38 by manki             #+#    #+#             */
+/*   Updated: 2019/07/23 18:34:56 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static char		*ft_cut_mantissa(t_option opt, char *nb)
+static char		*ft_fill_mantissa(t_option opt, char *m, int op, double arg)
 {
+	char	*mant;
 	int		precision;
-	int		i;
-	int		j;
+	char	*zero;
 
 	precision = 6;
-	if ((opt.option & POINT) && (opt.precision != 6 && opt.precision >= 0))
+	if ((opt.option & POINT) && (opt.precision != 6))
 		precision = opt.precision;
-	i = -1;
-	j = -1;
-	while (j == -1 && nb[++i])
-		if (nb[i] == '.')
-			j = i;
-	while (nb[i] && ((i - j) < precision))
+	mant = ft_traduct(m, op, arg);
+	if ((int)ft_strlen(mant) < precision)
 	{
-		i++;
+		zero = ft_strnew(precision - ft_strlen(mant));
+		ft_memset(zero, '0', precision - ft_strlen(mant));
+		mant = ft_strjoin(mant, zero);
 	}
-	if (nb[i] && ((i - j) == precision))
-		nb = ft_roundd(nb, i, &j, precision);
-	else if (nb[i] == '\0' && ((i - j) < precision))
+	else if (ft_strlen(mant) > 0)
+		ft_round(mant, precision);
+	if ((ft_strlen(mant) > 0 && mant[0] != 'a') || (opt.option & HASH))
 	{
-		nb = ft_realloc(nb, precision + j + 2);
-		while (i <= (precision + j))
-		{
-			nb[i] = '0';
-			i++;
-		}
+		mant = ft_strjoin(".", mant);
 	}
-	if (precision == 0 && !(opt.option & HASH))
-		nb[j] = '\0';
-	return (nb);
-}
-/*
-	ft_putstr("[");
-	ft_putstr(nb);
-	ft_putstr("]");
-	*/
-
-static int		ft_firstoneat(char f_str[])
-{
-	int		i;
-
-	i = 0;
-	while (f_str[i + M_START])
-	{
-		if (f_str[i + M_START] == '1')
-			return (i);
-		i++;
-	}
-	return (i);
+	return (mant);
 }
 
 static char		*ft_get_value(t_option opt, char f_str[], double arg)
 {
-	int					iexp;
-	int					zero;
-	char				hidden_bit;
-	char				*value;
-	int					i;
-	int					dot_pos;
+	char				*integ;
+	unsigned long long	decim;
+	long long			exp;
+	char				*ret;
+	int					nul;
 
-
-	zero = ft_is_null(f_str, E_START, ft_strlen(f_str) - 1);
-	iexp = 0;
-	if (!zero)
+	nul = ft_is_null(f_str, E_START, ft_strlen(f_str) - 1);
+	exp = 0;
+	if (!ft_is_null(f_str, E_START, ft_strlen(f_str) - 1))
+		exp = (long long)ft_mul2_trash(f_str, 0, E_END) - E_BIAS;
+	integ = ft_mul2_traduct(f_str, E_END, E_END + exp);
+	if (!(ft_is_null(f_str, E_START, E_END) && !ft_is_null(f_str, M_START,
+					M_END)) && !nul)
 	{
-		iexp = ft_atoi(ft_mul2_traduct(f_str, 0, E_END)) - E_BIAS;
+		ret = ft_strpower("2", exp);
+		integ = ft_stradd(integ, ret, ft_strlen(integ), ft_strlen(ret));
 	}
-	else
-		iexp = 0;
-	hidden_bit = '0';
-	if (!iexp  && !ft_is_null(f_str, M_START, M_END) && f_str[0] != '1')
-		iexp = 1 - E_BIAS;
-	if ((!ft_is_null(f_str, M_START, M_END)) ||
-			(ft_is_null(f_str, M_START, M_END) && !zero))
-
-		hidden_bit = '1';
-	if (iexp == -1023 && !zero)
-		iexp -= ft_firstoneat(f_str);
-//	else if (iexp < -1023 && !zero)
-//		iexp += ft_firstoneat(f_str);
-	value = ft_newtrad(f_str, M_START);
-	value[0] = hidden_bit;
-	if (iexp > 0)
-	{
-		i = -1;
-		while (++i < iexp)
-			value = ft_strmul(value, "2", ft_strlen(value), 1);
-	}
-	else
-	{
-		i = 1;
-		while (--i > iexp)
-			value = ft_strdivby2(value, ft_strlen(value));
-	}
-	dot_pos = ft_dbl_len(arg);
-	value = ft_putdot(value, ft_strlen(value), dot_pos);
-	value = ft_cut_mantissa(opt, value);
+	decim = ft_mul2_trash(f_str, E_END + exp, M_END);
+	ret = ft_fill_mantissa(opt, ft_ulltoa(decim), M_END - E_END - exp, arg);
+	ret = ft_strjoin(integ, ret);
+	ret = ft_round2(ret, 0);
 	if (f_str[0] == '1')
-		value = ft_charcat('-', value, ft_strlen(value));
-	return (value);
+	{
+		ret = ft_strjoin("-", ret);
+	}
+	return (ret);
 }
+
 /*
 		ft_putstr("[");
-		ft_putstr(ft_lltoa(iexp));
-		ft_putstr("]\n");
-//		ft_afficher(f_str, 8);
-		ft_putstr("[");
-		ft_putstr(ft_lltoa(iexp));
+		ft_putstr(integ);
 		ft_putstr("]\n");
 		*/
 static char		*ft_fill_nb(t_option opt, double arg)
