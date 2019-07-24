@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:11:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/24 22:15:39 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/24 22:45:16 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char		*ft_cut_mantissa(t_option opt, char *nb)
 	ft_putstr("]");
 	*/
 
-static int		ft_firstoneat(char f_str[])
+/*static int		ft_firstoneat(char f_str[])
 {
 	int		i;
 
@@ -63,7 +63,7 @@ static int		ft_firstoneat(char f_str[])
 		i++;
 	}
 	return (i);
-}
+}*/
 
 static char		*ft_get_value(t_option opt, char f_str[], double arg)
 {
@@ -77,25 +77,29 @@ static char		*ft_get_value(t_option opt, char f_str[], double arg)
 
 	zero = ft_is_null(f_str, E_START, ft_strlen(f_str) - 1);
 	iexp = 0;
+	hidden_bit = '0';
 	if (!zero)
 	{
 		iexp = ft_atoi(ft_mul2_traduct(f_str, 0, E_END)) - E_BIAS;
+		if (iexp == -1023)
+			iexp++;;
 	}
 	else
 		iexp = 0;
-	hidden_bit = '0';
 	if (!iexp  && !ft_is_null(f_str, M_START, M_END) && f_str[0] != '1')
 		iexp = 1 - E_BIAS;
 	if ((!ft_is_null(f_str, M_START, M_END)) ||
 			(ft_is_null(f_str, M_START, M_END) && !zero))
-
 		hidden_bit = '1';
-	if (iexp == -1023 && !zero)
-		iexp -= ft_firstoneat(f_str);
-//	else if (iexp < -1023 && !zero)
-//		iexp += ft_firstoneat(f_str);
+		if (iexp == -1022)
+			hidden_bit = '0';
+
 	value = ft_newtrad(f_str, M_START);
 	value[0] = hidden_bit;
+//	if (iexp == -1022 && !zero)
+//		iexp -= ft_firstoneat(f_str);
+//	else if (iexp < -1023 && !zero)
+//		iexp += ft_firstoneat(f_str);
 	if (iexp > 0)
 	{
 		i = -1;
@@ -106,7 +110,9 @@ static char		*ft_get_value(t_option opt, char f_str[], double arg)
 	{
 		i = 1;
 		while (--i > iexp)
+		{
 			value = ft_strdivby2(value, ft_strlen(value));
+		}
 	}
 	dot_pos = ft_dbl_len(arg);
 	value = ft_putdot(value, ft_strlen(value), dot_pos);
@@ -116,8 +122,11 @@ static char		*ft_get_value(t_option opt, char f_str[], double arg)
 	return (value);
 }
 /*
+		ft_putstr("{");
+		ft_putstr(ft_lltoa(ft_firstoneat(f_str)));
+		ft_putstr("}\n");
 		ft_putstr("[");
-		ft_putstr(ft_lltoa(iexp));
+		ft_putstr(value);
 		ft_putstr("]\n");
 //		ft_afficher(f_str, 8);
 		ft_putstr("[");
