@@ -5,144 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/23 18:34:38 by manki             #+#    #+#             */
-/*   Updated: 2019/07/23 18:34:56 by manki            ###   ########.fr       */
+/*   Created: 2019/07/25 02:05:31 by manki             #+#    #+#             */
+/*   Updated: 2019/07/25 02:54:27 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static char		*ft_fill_mantissa(t_option opt, char *m, int op, double arg)
+char			*ft_charcat(char a, char *str, int len)
 {
-	char	*mant;
-	int		precision;
-	char	*zero;
+	int		i;
+	char	c;
 
-	precision = 6;
-	if ((opt.option & POINT) && (opt.precision != 6))
-		precision = opt.precision;
-	mant = ft_traduct(m, op, arg);
-	if ((int)ft_strlen(mant) < precision)
+	str = ft_realloc(str, len + 2);
+	i = 0;
+	while (str[i + 1])
 	{
-		zero = ft_strnew(precision - ft_strlen(mant));
-		ft_memset(zero, '0', precision - ft_strlen(mant));
-		mant = ft_strjoin(mant, zero);
+		c = str[i + 1];
+		str[i + 1] = str[0];
+		str[0] = c;
+		i++;
 	}
-	else if (ft_strlen(mant) > 0)
-		ft_round(mant, precision);
-	if ((ft_strlen(mant) > 0 && mant[0] != 'a') || (opt.option & HASH))
-	{
-		mant = ft_strjoin(".", mant);
-	}
-	return (mant);
+	str[i + 1] = str[0];
+	str[0] = a;
+	return (str);
 }
 
-static char		*ft_get_value(t_option opt, char f_str[], double arg)
+static char		*ft_saveline(t_define var[], char *ret, int i)
 {
-	char				*integ;
-	unsigned long long	decim;
-	long long			exp;
-	char				*ret;
-	int					nul;
-
-	nul = ft_is_null(f_str, E_START, ft_strlen(f_str) - 1);
-	exp = 0;
-	if (!ft_is_null(f_str, E_START, ft_strlen(f_str) - 1))
-		exp = (long long)ft_mul2_trash(f_str, 0, E_END) - E_BIAS;
-	integ = ft_mul2_traduct(f_str, E_END, E_END + exp);
-	if (!(ft_is_null(f_str, E_START, E_END) && !ft_is_null(f_str, M_START,
-					M_END)) && !nul)
+	if ((int)ft_strlen(ret) < var->m_end + 1)
 	{
-		ret = ft_strpower("2", exp);
-		integ = ft_stradd(integ, ret, ft_strlen(integ), ft_strlen(ret));
+		i = (int)ft_strlen(ret) - 1;
+		while (++i <= var->m_end)
+		{
+			ret = ft_strjoin(ret, "0");
+		}
 	}
-	decim = ft_mul2_trash(f_str, E_END + exp, M_END);
-	ret = ft_fill_mantissa(opt, ft_ulltoa(decim), M_END - E_END - exp, arg);
-	ret = ft_strjoin(integ, ret);
-	ret = ft_round2(ret, 0);
-	if (f_str[0] == '1')
-	{
-		ret = ft_strjoin("-", ret);
-	}
+	if (ft_is_max(ret, var->e_start, var->e_end) &&
+			!ft_is_null(ret, var->m_start, var->m_end))
+		return ("nan");
+	if (ft_is_max(ret, 0, var->e_end) &&
+			ft_is_null(ret, var->m_start, var->m_end))
+		return ("-inf");
+	if (ft_is_max(ret, var->e_start, var->e_end) &&
+			ft_is_null(ret, var->m_start, var->m_end))
+		return ("inf");
 	return (ret);
 }
 
-/*
-		ft_putstr("[");
-		ft_putstr(integ);
-		ft_putstr("]\n");
-		*/
-static char		*ft_fill_nb(t_option opt, double arg)
+char			*ft_dbl_to_str(double arg, t_define var)
 {
-	char	*f_str;
-	char	*nb;
-	int		nul;
+	char			*ret;
+	unsigned char	buff[var.buf];
 
-	f_str = ft_float_to_str(arg);
-	if (!ft_strcmp(f_str, "nan") || !ft_strcmp(f_str, "inf") ||
-			!ft_strcmp(f_str, "-inf"))
-	{
-		nul = 2;
-		nb = f_str;
-	}
-	else
-	{
-		nb = ft_get_value(opt, f_str, arg);
-		nul = ft_is_null(f_str, 0, ft_strlen(f_str) - 1);
-	}
-	if ((opt.option & PLUS) && ((arg > 0 || (nul == 1)) || ((nul == 2) &&
-					(nb[0] != '-') && (nb[0] != 'n'))))
-		nb = ft_strjoin("+", nb);
-	else if ((opt.option & SPACE) && ((arg > 0 || (nul == 1)) ||
-				((nul == 2) && (nb[0] != '-') && (nb[0] != 'n'))))
-		nb = ft_strjoin(" ", nb);
-	return (nb);
+	ft_memcpy(buff, &arg, var.buf);
+	ret = ft_ctob(buff, var.buf);
+	ret = ft_saveline(&var, ret, 0);
+	return (ret);
 }
 
-static char		*ft_fill_output(t_option opt, char *nb)
+char			*ft_ldb_to_str(long double arg, t_define *var)
 {
-	char	*output;
+	char			*ret;
+	unsigned char	buff[var->buf];
+	char			*test;
 
-	if (opt.width > (int)ft_strlen(nb))
+	ft_setvar(var, 0, 0, (double)arg);
+	test = ft_dbl_to_str(var->a, *var);
+	if (!ft_strcmp(test, "inf") || !ft_strcmp(test, "-inf") ||
+			!ft_strcmp(test, "nan"))
 	{
-		output = ft_strnew(opt.width - ft_strlen(nb));
-		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!(opt.option & MINUS) && (opt.option & ZERO) &&
-				(ft_isdigit(nb[0]) || ft_isdigit(nb[1])))
-			ft_tr(output, ' ', '0');
-		if (opt.option & MINUS)
-			output = ft_strjoin(nb, output);
-		else if (((((opt.option & PLUS) || (opt.option & SPACE)) &&
-						(nb[0] != '-') && (opt.option & ZERO)) ||
-					((opt.option & ZERO) && (nb[0] == '-'))) &&
-				(ft_isdigit(nb[0]) || ft_isdigit(nb[1])))
-		{
-			output = ft_strjoin(output, &nb[1]);
-			nb[1] = '\0';
-			output = ft_strjoin(nb, output);
-		}
-		else
-			output = ft_strjoin(output, nb);
+		ft_setvar(var, 1, arg, (double)arg);
+		ft_memcpy(buff, &arg, var->buf);
+		ret = ft_ctob(buff, var->buf);
+		ret = ft_saveline(var, ret, 0);
+		return (ret);
 	}
 	else
-		output = nb;
-	return (output);
-}
-
-char			*ft_fill_f_output(t_option opt, va_list *ap, size_t *size)
-{
-	double		a;
-	char		*output;
-
-	if (opt.modif & LD_X)
-	{
-		a = va_arg(*ap, long double);
-		size[0] = ft_strlen("0.000000");
-		return ("0.000000");
-	}
-	a = va_arg(*ap, double);
-	output = ft_fill_nb(opt, a);
-	output = ft_fill_output(opt, output);
-	size[0] = ft_strlen(output);
-	return (output);
+		return (test);
 }

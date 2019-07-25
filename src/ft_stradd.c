@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:49:00 by manki             #+#    #+#             */
-/*   Updated: 2019/07/24 12:48:12 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 01:18:21 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char			*ft_stradd(char *a, char *b, size_t a_len, size_t b_len)
 	size_t	len;
 
 	len = ft_max(a_len, b_len) + 1;
-	if(!(res = ft_memalloc(len + 1)))
+	if (!(res = ft_memalloc(len + 1)))
 		return (NULL);
 	rest = 0;
 	i = 0;
@@ -58,7 +58,7 @@ static void		ft_copy(char *res, char *src, size_t *src_len, size_t end)
 {
 	while (end < src_len[0])
 	{
-		src_len[0]--;;
+		src_len[0]--;
 		res[*src_len] = src[*src_len];
 	}
 }
@@ -70,7 +70,7 @@ char			*ft_leftadd(char *a, char *b, size_t a_len, size_t b_len)
 	size_t	i;
 	char	c;
 
-	if(!(res = ft_memalloc(ft_max(a_len, b_len) + 1 + 1)))
+	if (!(res = ft_memalloc(ft_max(a_len, b_len) + 1 + 1)))
 		return (NULL);
 	rest = 0;
 	i = 0;

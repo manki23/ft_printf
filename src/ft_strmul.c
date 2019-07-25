@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 14:32:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/23 20:11:47 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:01:05 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_calc(char *res, size_t *i, char c, t_byte *restraint)
 		res[*i] = c + '0';
 		restraint[0] = 0;
 	}
-	i[0]--;;
+	i[0]--;
 }
 
 char		*ft_strmul(char a[], char b[], size_t a_len, size_t b_len)
@@ -34,29 +34,19 @@ char		*ft_strmul(char a[], char b[], size_t a_len, size_t b_len)
 	t_byte	rest;
 	size_t	i;
 	size_t	j;
-	char	c;
 
-	if (!(res2 = ft_memalloc(a_len + b_len + 1)))
-		return (NULL);
+	res2 = ft_memalloc(a_len + b_len + 1);
 	j = 0;
-	while (b_len && a_len)
+	while ((--b_len + 1) && a_len)
 	{
-		if (!(res = ft_memalloc(a_len + j + 2)))
-			return (NULL);
-		b_len--;
+		res = ft_memalloc(a_len + j + 2);
 		i = a_len;
 		rest = 0;
 		while (i)
-		{
-			c = (a[i - 1] - '0') * (b[b_len] - '0') + rest;
-			ft_calc(res, &i, c, &rest);
-		}
+			ft_calc(res, &i, (a[i - 1] - '0') * (b[b_len] - '0') + rest, &rest);
 		res[i] = rest + '0';
-		while (i < j)
-		{
+		while (++i - 1 < j)
 			res[ft_strlen(res)] = '0';
-			i++;
-		}
 		res2 = ft_stradd(res2, res, ft_strlen(res2), ft_strlen(res));
 		ft_strdel(&res);
 		j++;
@@ -65,12 +55,3 @@ char		*ft_strmul(char a[], char b[], size_t a_len, size_t b_len)
 		return (&res2[1]);
 	return (res2);
 }
-/*
-		ft_putstr("[");
-		ft_putstr(a);
-		ft_putstr("]");
-
-		ft_putstr("[");
-		ft_putchar(j + '0');
-		ft_putstr("]");
-		*/

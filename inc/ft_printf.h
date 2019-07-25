@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/24 18:56:01 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:34:24 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,32 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-/*
-# define E_START 1
-# define E_END 15
-# define M_START 16
-# define M_END 127
-# define E_BIAS 16383
-# define BUF 16
-*/
+
+# define LDB_E_START 1
+# define LDB_E_END 15
+# define LDB_M_START 16
+# define LDB_M_END 127
+# define LDB_E_BIAS 16383
+# define LDB_BUF 16
+
 # define E_START 1
 # define E_END 11
 # define M_START 12
 # define M_END 63
 # define E_BIAS 1023
 # define BUF 8
+
+typedef struct		s_define
+{
+	short			e_start;
+	short			e_end;
+	short			m_start;
+	short			m_end;
+	short			e_bias;
+	short			buf;
+	long double		b;
+	double			a;
+}					t_define;
 
 # define EMPT 0x0000
 # define MINUS 0b00000001
@@ -98,24 +110,24 @@ char				*ft_strpower(char *nb, int power);
 
 t_byte				ft_is_max(char *bit_nb, int from, int to);
 t_byte				ft_is_null(char *bit_nb, int from, int to);
-char				*ft_traduct(char *nb, int op, double f);
-unsigned long long	ft_mul2_trash(char *nb, int i, int end);
-char				*ft_mul2_traduct(char *nb, int i, int end);
+char				*ft_mul2_traduct(char *nb, int i, int end, t_define var);
 size_t				ft_max(size_t a, size_t b);
 char				*ft_stradd(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_leftadd(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_strmul(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_strdivby2(char *a, size_t a_len);
-char				*ft_newtrad(char *f_str, int index);
+char				*ft_newtrad(char *f_str, int index, int i);
 char				*ft_putdot(char *str, size_t str_len, int position);
 char				*ft_charcat(char c, char *str, int len);
+void				ft_setvar(t_define *var, int ldb, long double b, double a);
+char				*ft_get_fvalue(t_option opt, char f_str[], t_define var);
+char				*ft_cut_mantissa(t_option opt, char *nb);
 
 void				ft_afficher_bit(char *str, int mod);
 void				ft_display(t_option opt);
 
-char				*ft_float_to_str(double arg);
-void				ft_round(char *mantissa, int precision);
-char				*ft_round2(char *nb, int len);
+char				*ft_dbl_to_str(double arg, t_define var);
+char				*ft_ldb_to_str(long double arg, t_define *var);
 char				*ft_roundd(char *nb, int pos, int *dot_pos, int precision);
 
 char				*ft_fill_di_output(t_option opt, va_list *ap, size_t *size);

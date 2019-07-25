@@ -6,13 +6,12 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 13:25:07 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 19:48:27 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:49:32 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-#include <stdio.h>
 static char			*ft_what_base(t_option opt)
 {
 	if (opt.flag & L_o)
@@ -58,11 +57,13 @@ static char			*ft_fill_output(t_option opt, char *nb)
 {
 	char	*output;
 
+	output = nb;
 	if (opt.width > (int)ft_strlen(nb))
 	{
 		output = ft_strnew(opt.width - ft_strlen(nb));
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!(opt.option & MINUS) && !(opt.option & POINT) && (opt.option & ZERO))
+		if (!(opt.option & MINUS) && !(opt.option & POINT) &&
+				(opt.option & ZERO))
 			ft_tr(output, ' ', '0');
 		if (opt.option & MINUS)
 			output = ft_strjoin(nb, output);
@@ -77,8 +78,6 @@ static char			*ft_fill_output(t_option opt, char *nb)
 		else
 			output = ft_strjoin(output, nb);
 	}
-	else
-		output = nb;
 	return (output);
 }
 

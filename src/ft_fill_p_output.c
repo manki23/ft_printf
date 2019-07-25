@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 11:03:01 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 19:38:48 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:52:59 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static char		*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 		nb = ft_strjoin(zero, ft_ulltoa_base(arg, base));
 		ft_strdel(&zero);
 	}
-	//else if (!arg && (opt.option & POINT) && !opt.precision)
-	else if ((arg & EMPT) & (opt.option & POINT) & (opt.precision & EMPT))
+	else if ((arg == 0) && (opt.option & POINT) && (opt.precision == 0))
 		nb = "";
 	else
 		nb = ft_ulltoa_base(arg, base);
@@ -43,7 +42,8 @@ static char		*ft_fill_output(t_option opt, char *nb)
 	{
 		output = ft_strnew(opt.width - ft_strlen(nb));
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!(opt.option & MINUS) && !(opt.option & POINT) && (opt.option & ZERO))
+		if (!(opt.option & MINUS) && !(opt.option & POINT) &&
+				(opt.option & ZERO))
 			ft_tr(output, ' ', '0');
 		if (opt.option & MINUS)
 			output = ft_strjoin(nb, output);
@@ -62,7 +62,6 @@ char			*ft_fill_p_output(t_option opt, va_list *ap, size_t *size)
 	int					len;
 	unsigned long long	a;
 
-	(void)opt;
 	arg = va_arg(*ap, void *);
 	a = (unsigned long long)arg;
 	len = opt.precision - ft_unblen_base(a, "0123456789abcdef");

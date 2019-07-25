@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 13:04:16 by manki             #+#    #+#             */
-/*   Updated: 2019/07/23 16:36:05 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:51:10 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ char	*ft_strpower(char *nb, int power)
 	}
 	return (nb);
 }
-/*
-			ft_putstr("{");
-			ft_putstr(nb);
-			ft_putstr("}");
-			*/
 
 double	ft_ipower(double nb, double power)
 {

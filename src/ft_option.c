@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 14:05:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 17:37:35 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 02:48:07 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ static int		ft_check(char c)
 
 void			ft_fill_t_option(t_option *opt, char **p)
 {
-		p[0]++;
+	p[0]++;
 	while (p[0][0] && !ft_is_conv(p[0][0]) && ft_check(p[0][0]))
 	{
 		p[0] += ft_fill_length_mod(opt, p);
-		if (!ft_read(&(opt->option), 5) && ft_isdigit(p[0][0]) && p[0][0] != '0')
+		if (!ft_read(&(opt->option), 5) && ft_isdigit(p[0][0]) &&
+				p[0][0] != '0')
 		{
 			opt->width = ft_atoi(p[0]);
 			p[0] += ft_nblen(ft_atoi(p[0]));

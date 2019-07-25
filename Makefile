@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/07/24 17:38:41 by manki            ###   ########.fr        #
+#    Updated: 2019/07/25 02:23:26 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJ_PATH = ./obj
 OBJLIB_PATH = ./obj
 
 SRC_NAME = ft_printf.c ft_analysis.c ft_basics.c ft_putdot.c \
-		   ft_fill_di_output.c ft_fill_uoxx_output.c \
+		   ft_fill_di_output.c ft_fill_uoxx_output.c ft_float3.c ft_float4.c \
 		   ft_fill_c_output.c ft_fill_s_output.c ft_option.c \
 		   ft_list.c ft_fill_p_output.c ft_utils_f.c ft_strmul.c \
 		   ft_floats.c ft_afficher.c ft_float2.c ft_bitwise.c ft_stradd.c \
