@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 14:32:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:01:05 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 15:30:10 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char		*ft_strmul(char a[], char b[], size_t a_len, size_t b_len)
 	t_byte	rest;
 	size_t	i;
 	size_t	j;
+	char	*tmp;
 
 	res2 = ft_memalloc(a_len + b_len + 1);
 	j = 0;
@@ -47,11 +48,13 @@ char		*ft_strmul(char a[], char b[], size_t a_len, size_t b_len)
 		res[i] = rest + '0';
 		while (++i - 1 < j)
 			res[ft_strlen(res)] = '0';
+		tmp = res2;
 		res2 = ft_stradd(res2, res, ft_strlen(res2), ft_strlen(res));
+		ft_strdel(&tmp);
 		ft_strdel(&res);
 		j++;
 	}
 	if (res2[0] == '0')
-		return (&res2[1]);
+		res2 = ft_strncpy(res2, &res2[1], ft_strlen(res2));
 	return (res2);
 }

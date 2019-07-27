@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:34:24 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 10:31:47 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+
+# define BUFFER_SIZE 4096
 
 # define LDB_E_START 1
 # define LDB_E_END 15
@@ -52,10 +54,10 @@ typedef struct		s_define
 # define HASH 0b00010000
 # define POINT 0b00100000
 
-# define H_pourcent 0b00000001
-# define HH_u 0b00000010
-# define L_o 0b00000100
-# define LL_x 0b00001000
+# define H_POURCENT 0b00000001
+# define HH_U 0b00000010
+# define L_O 0b00000100
+# define LL_X 0b00001000
 # define LD_X 0b00010000
 
 typedef unsigned char	t_byte;
@@ -121,7 +123,6 @@ char				*ft_putdot(char *str, size_t str_len, int position);
 char				*ft_charcat(char c, char *str, int len);
 void				ft_setvar(t_define *var, int ldb, long double b, double a);
 char				*ft_get_fvalue(t_option opt, char f_str[], t_define var);
-char				*ft_cut_mantissa(t_option opt, char *nb);
 
 void				ft_afficher_bit(char *str, int mod);
 void				ft_display(t_option opt);
@@ -152,6 +153,8 @@ void				ft_memdel(void **ap);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
+char				*ft_strcat(char *s1, const char *s2);
+char				*ft_strncat(char *s1, const char *s2, size_t n);
 char				*ft_strchr(const char *s, int c);
 int					ft_strcmp(const char *s1, const char *s2);
 void				ft_strdel(char **as);

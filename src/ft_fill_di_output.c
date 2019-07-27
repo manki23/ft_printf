@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:53:41 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 12:59:11 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,67 @@ static char		*ft_fill_nb(t_option opt, int len, long long arg)
 {
 	char	*zero;
 	char	*nb;
+	char	*tmp;
 
 	if (ft_nblen(arg) < opt.precision)
 	{
-		zero = ft_strnew(len);
-		ft_memset(zero, '0', len);
 		nb = ft_lltoa(arg);
+		zero = (char *)ft_memalloc(ft_strlen(nb) + len + 2);
+		ft_memset(zero, '0', len);
+		tmp = nb;
+		nb = ft_strcat(zero, nb);
+		ft_strdel(&tmp);
 		if (arg < 0)
 		{
-			nb = ft_strjoin(zero, &nb[1]);
-			zero[0] = '-';
-			zero[1] = '\0';
+			nb[0] = '-';
+			nb[len] = '0';
 		}
-		nb = ft_strjoin(zero, nb);
 	}
 	else if (arg == 0 && (opt.option & POINT) && !opt.precision)
-		nb = "";
+		nb = ft_memalloc(2);
 	else
-		nb = ft_lltoa(arg);
+		nb = ft_realloc(ft_lltoa(arg), ft_nblen(arg) + 2);
 	if ((opt.option & PLUS) && arg >= 0)
-		nb = ft_strjoin("+", nb);
+		nb = ft_charcat('+', nb, ft_strlen(nb));
 	else if ((opt.option & SPACE) && arg >= 0)
-		nb = ft_strjoin(" ", nb);
+		nb = ft_charcat(' ', nb, ft_strlen(nb));
 	return (nb);
 }
 
-static char		*ft_fill_output(t_option opt, char *nb, long long arg)
+static char		*ft_fill_output(t_option o, char *nb, long long arg)
 {
 	char	*output;
+	char	*tmp;
 
 	output = nb;
-	if (opt.width > (int)ft_strlen(nb))
+	if (o.width > (int)ft_strlen(nb))
 	{
-		output = ft_strnew(opt.width - ft_strlen(nb));
-		ft_memset(output, ' ', opt.width - ft_strlen(nb));
-		if (!(opt.option & MINUS) && !(opt.option & POINT) &&
-				(opt.option & ZERO))
+		output = (char *)ft_memalloc(o.width + 1);
+		nb = (char *)ft_realloc(nb, o.width + 1);
+		ft_memset(output, ' ', o.width - ft_strlen(nb));
+		if (!(o.option & MINUS) && !(o.option & POINT) && (o.option & ZERO))
 			ft_tr(output, ' ', '0');
-		if (opt.option & MINUS)
-			output = ft_strjoin(nb, output);
-		else if ((((opt.option & PLUS) || (opt.option & SPACE)) && arg >= 0 &&
-					(opt.option & ZERO) && !(opt.option & POINT)) ||
-				(!(opt.option & POINT) && (opt.option & ZERO) && arg < 0))
+		if (o.option & MINUS)
 		{
-			output = ft_strjoin(output, &nb[1]);
+			tmp = output;
+			output = ft_strcat(nb, output);
+			ft_strdel(&tmp);
+		}
+		else if ((((o.option & PLUS) || (o.option & SPACE)) && arg >= 0 &&
+					(o.option & ZERO) && !(o.option & POINT)) ||
+				(!(o.option & POINT) && (o.option & ZERO) && arg < 0))
+		{
+			output = ft_strcat(output, &nb[1]);
 			nb[1] = '\0';
-			output = ft_strjoin(nb, output);
+			tmp = output;
+			output = ft_strcat(nb, output);
+			ft_strdel(&tmp);
 		}
 		else
-			output = ft_strjoin(output, nb);
+		{
+			output = ft_strcat(output, nb);
+			ft_strdel(&nb);
+		}
 	}
 	return (output);
 }

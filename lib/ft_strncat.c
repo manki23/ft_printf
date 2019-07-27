@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/04 13:31:46 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 05:22:23 by manki            ###   ########.fr       */
+/*   Created: 2017/11/11 10:30:50 by manki             #+#    #+#             */
+/*   Updated: 2017/11/11 10:39:49 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "../inc/ft_printf.h"
+#include <string.h>
 
-void	*ft_realloc(void *ptr, size_t size)
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	void	*tmp;
+	size_t		i;
+	size_t		j;
 
-	if (size == 0 && ptr)
+	i = 0;
+	while (s1[i])
+		i++;
+	j = 0;
+	while (s2[j] && j < n)
 	{
-		ft_memdel(&ptr);
-		if (!(ptr = ft_memalloc(1)))
-			return (NULL);
+		s1[i] = s2[j];
+		i++;
+		j++;
 	}
-	else if (size > 0)
-	{
-		tmp = ptr;
-		if (!(ptr = ft_memalloc(size)))
-			return (NULL);
-		if (tmp)
-		{
-			ft_strncpy(ptr, tmp, size);
-			ft_memdel(&tmp);
-		}
-	}
-	return (ptr);
+	s1[i] = '\0';
+	return (s1);
 }

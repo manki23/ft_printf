@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 14:08:52 by manki             #+#    #+#             */
-/*   Updated: 2017/11/18 08:19:53 by manki            ###   ########.fr       */
+/*   Created: 2017/11/11 10:22:59 by manki             #+#    #+#             */
+/*   Updated: 2017/11/11 10:29:07 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	size_t	i;
+	int		i;
+	int		j;
 
-	if (n > 0)
+	i = 0;
+	while (s1[i])
+		i++;
+	j = 0;
+	while (s2[j])
 	{
-		i = 0;
-		while ((i < n - 1) && s1[i] && s2[i] && s1[i] == s2[i])
-			i++;
-		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		s1[i] = s2[j];
+		i++;
+		j++;
 	}
-	return (0);
+	s1[i] = '\0';
+	return (s1);
 }

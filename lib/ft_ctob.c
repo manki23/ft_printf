@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:32:22 by manki             #+#    #+#             */
-/*   Updated: 2019/07/21 15:30:54 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 12:32:39 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,15 @@ static void		ft_fill(char *res, unsigned char tab[], int len)
 	}
 }
 
-char			*ft_ctob(unsigned char *tab, int size)
+char			*ft_ctob(unsigned char tab[], int size)
 {
 	char	*res;
 	int		len;
 
 	len = size * CHAR_BIT;
-	if (!(res = ft_strnew(len)))
+	if (!(res = ft_memalloc(len + 1)))
 		return (NULL);
 	ft_memset(res, '0', len);
-	res[len] = '\0';
 	ft_fill(res, tab, size);
 	return (res);
 }

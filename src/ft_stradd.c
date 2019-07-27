@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:49:00 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 01:18:21 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 15:01:34 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ char			*ft_stradd(char *a, char *b, size_t a_len, size_t b_len)
 		while (b[i])
 			ft_calc(&res[--len], &i, b[--b_len] + rest, &rest);
 	res[0] = rest + '0';
-	if (rest)
-		return (res);
-	else
-		return (&res[1]);
+	if (!rest)
+		res = ft_strncpy(res, &res[1], ft_strlen(res));
+	return (res);
 }
 
 static void		ft_copy(char *res, char *src, size_t *src_len, size_t end)
@@ -81,5 +80,7 @@ char			*ft_leftadd(char *a, char *b, size_t a_len, size_t b_len)
 		c = a[--a_len] + b[--b_len] + rest - '0';
 		ft_calc(&res[a_len], &i, c, &rest);
 	}
+	ft_strdel(&a);
+	ft_strdel(&b);
 	return (res);
 }

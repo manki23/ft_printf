@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 13:51:42 by manki             #+#    #+#             */
-/*   Updated: 2019/07/24 16:51:20 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 15:33:22 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char	*ft_putdot(char *str, size_t str_len, int position)
 	}
 	if (str_len == 1)
 		str[1] = '.';
+	ft_strdel(&tmp);
 	return (str);
 }

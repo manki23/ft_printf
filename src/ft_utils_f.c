@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 01:56:09 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 14:59:26 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ t_byte				ft_is_null(char *bit_nb, int from, int to)
 static char			*ft_saveline(char *nb, char *res, int end)
 {
 	char	*tmp;
+	char	*tmp2;
 
 	if (nb[0] == '1')
 	{
 		tmp = ft_strpower("2", end);
+		tmp2 = res;
 		res = ft_stradd(res, tmp, ft_strlen(res), ft_strlen(tmp));
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
 	}
 	return (res);
 }
@@ -71,15 +75,15 @@ char				*ft_mul2_traduct(char *nb, int i, int end, t_define var)
 	return (res);
 }
 
-char				*ft_newtrad(char *f_str, int index, int i)
+char				*ft_newtrad(char f_str[], int index, int i)
 {
 	char	*res;
 	char	*tmp;
 	int		tmp_len;
 
-	if (!ft_is_null(f_str, 1, ft_strlen(f_str)))
+	res = ft_memalloc(2);
+	if (!ft_is_null(f_str, 1, ft_strlen(f_str) - 1))
 	{
-		res = ft_memalloc(2);
 		res[0] = '0';
 		while (++i + index <= (int)ft_strlen(f_str))
 		{
@@ -93,7 +97,6 @@ char				*ft_newtrad(char *f_str, int index, int i)
 				res = ft_leftadd(res, tmp, ft_strlen(res), tmp_len + 1);
 			}
 		}
-		return (res);
 	}
-	return ("");
+	return (res);
 }

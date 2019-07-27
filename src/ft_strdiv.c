@@ -6,13 +6,13 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 19:22:29 by manki             #+#    #+#             */
-/*   Updated: 2019/07/23 19:51:01 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 13:20:14 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-char	*ft_strdivby2(char a[], size_t a_len)
+char	*ft_strdivby2(char *a, size_t a_len)
 {
 	char	*res;
 	char	c;
@@ -36,5 +36,6 @@ char	*ft_strdivby2(char a[], size_t a_len)
 		c /= 2;
 		res[i] = c + '0';
 	}
+	ft_strdel(&a);
 	return (res);
 }

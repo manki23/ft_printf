@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 10:15:35 by manki             #+#    #+#             */
-/*   Updated: 2019/07/17 17:11:47 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/26 12:53:06 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char			*ft_ulltoa_base(unsigned long long n, char base[])
 	if (ft_strlen(base) > 1 && ft_isvalid_base(base, ft_strlen(base) - 1))
 	{
 		len = ft_len(n, base);
-		if (!(res = ft_strnew(len)) && !ft_memset(res, '\0', len + 1))
+		if (!(res = ft_memalloc(len + 1)))
 			return (NULL);
 		ft_fill(res, base, n, ft_len(n, base));
 		return (res);

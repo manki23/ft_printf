@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/12 12:30:27 by manki             #+#    #+#             */
-/*   Updated: 2019/06/24 14:46:04 by manki            ###   ########.fr       */
+/*   Created: 2017/11/12 09:17:35 by manki             #+#    #+#             */
+/*   Updated: 2017/11/12 09:26:14 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <string.h>
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char			*fresh;
-	unsigned int	i;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
+	int				quit;
 
-	if (!s || !(fresh = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	quit = 0;
 	i = 0;
-	while (s[start + i] && ((start + i) < (start + len)))
+	while (!quit && i < n)
 	{
-		fresh[i] = s[start + i];
+		d[i] = s[i];
+		if (s[i] == (unsigned char)c)
+			quit = 1;
 		i++;
 	}
-	fresh[i] = '\0';
-	return (fresh);
+	if (quit)
+		return (&dst[i]);
+	else
+		return (NULL);
 }

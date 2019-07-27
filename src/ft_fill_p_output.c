@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 11:03:01 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:52:59 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 15:55:41 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,51 @@ static char		*ft_fill_nb(t_option opt, int len, unsigned long long arg)
 	char	*zero;
 	char	*nb;
 	char	*base;
+	char	*tmp;
 
 	base = "0123456789abcdef";
 	if (ft_unblen_base(arg, base) < opt.precision)
 	{
-		zero = ft_strnew(len);
+		nb = ft_ulltoa_base(arg, base);
+		zero = ft_memalloc(ft_strlen(nb) + len + 1);
 		ft_memset(zero, '0', len);
-		nb = ft_strjoin(zero, ft_ulltoa_base(arg, base));
-		ft_strdel(&zero);
+		tmp = nb;
+		nb = ft_strcat(zero, nb);
+		ft_strdel(&tmp);
 	}
 	else if ((arg == 0) && (opt.option & POINT) && (opt.precision == 0))
-		nb = "";
+		nb = ft_memalloc(2);
 	else
 		nb = ft_ulltoa_base(arg, base);
-	nb = ft_strjoin("0x", nb);
+	nb = ft_charcat('x', nb, ft_strlen(nb));
+	nb = ft_charcat('0', nb, ft_strlen(nb));
 	return (nb);
 }
 
 static char		*ft_fill_output(t_option opt, char *nb)
 {
 	char	*output;
+	char	*tmp;
 
 	if (opt.width > (int)ft_strlen(nb))
 	{
-		output = ft_strnew(opt.width - ft_strlen(nb));
+		output = ft_memalloc(opt.width + 1);
+		nb = ft_realloc(nb, opt.width + 1);
 		ft_memset(output, ' ', opt.width - ft_strlen(nb));
 		if (!(opt.option & MINUS) && !(opt.option & POINT) &&
 				(opt.option & ZERO))
 			ft_tr(output, ' ', '0');
 		if (opt.option & MINUS)
-			output = ft_strjoin(nb, output);
+		{
+			tmp = output;
+			output = ft_strcat(nb, output);
+			ft_strdel(&tmp);
+		}
 		else
-			output = ft_strjoin(output, nb);
+		{
+			output = ft_strcat(output, nb);
+			ft_strdel(&nb);
+		}
 	}
 	else
 		output = nb;

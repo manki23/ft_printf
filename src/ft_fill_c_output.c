@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 14:33:19 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 19:24:59 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 14:00:47 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,33 @@ static char		*ft_fill_output(t_option opt, char *arg, size_t *size)
 
 	if (opt.width > (int)size[0])
 	{
-		size[0] += opt.width - size[0];
-		output = ft_strnew(opt.width - 1);
-		ft_memset(output, ' ', opt.width - 1);
-		if (ft_read(&(opt.option), 2) && !ft_read(&(opt.option), 0))
+		output = ft_memalloc(opt.width + 1);
+		arg = ft_realloc(arg, opt.width + 1);
+		ft_memset(output, ' ', opt.width - size[0]);
+		if ((opt.option & ZERO) && !(opt.option & MINUS))
 			ft_tr(output, ' ', '0');
-		if (ft_read(&(opt.option), 0))
-			output = ft_strljoin(arg, output, 1, ft_strlen(output));
+		if (opt.option & MINUS)
+			output = ft_charcat(arg[0], output, ft_strlen(output));
 		else
-			output = ft_strljoin(output, arg, ft_strlen(output), 1);
+			output = ft_strcat(output, arg);
+		size[0] += opt.width - size[0];
+		ft_strdel(&arg);
 	}
 	else
-		output = ft_strjoin("", arg);
+		output = ft_realloc(arg, size[0] + 1);
 	return (output);
 }
 
 char			*ft_fill_c_output(t_option opt, va_list *ap, size_t *size)
 {
-	unsigned char	arg[2];
+	unsigned char	*arg;
 	char			*output;
 
-	if (opt.flag & H_pourcent)
+	arg = ft_memalloc(2);
+	if (opt.flag & H_POURCENT)
 		arg[0] = '%';
 	else
 		arg[0] = va_arg(*ap, int);
-	arg[1] = '\0';
 	size[0] = 1;
 	output = ft_fill_output(opt, (char *)arg, size);
 	return (output);

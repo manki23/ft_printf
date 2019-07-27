@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 14:05:51 by manki             #+#    #+#             */
-/*   Updated: 2019/07/23 15:03:08 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/25 05:16:14 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strrev(char *str)
 	i = 0;
 	len = ft_strlen(str);
 	s = ft_memalloc(len + 1);
-	s = ft_strncpy(s, str, len);
+	s = ft_memcpy(s, str, len);
 	while (--len > i)
 	{
 		swap = s[i];

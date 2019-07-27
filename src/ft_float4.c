@@ -6,35 +6,42 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 02:21:18 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:47:17 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 15:28:22 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void			ft_setvar(t_define *var, int ldb, long double b, double a)
+static char		*ft_cut_mantissa(t_option opt, char *nb)
 {
-	if (ldb)
+	int		precision;
+	int		i;
+	int		j;
+
+	precision = 6;
+	if ((opt.option & POINT) && (opt.precision != 6 && opt.precision >= 0))
+		precision = opt.precision;
+	i = -1;
+	j = -1;
+	while (j == -1 && nb[++i])
+		if (nb[i] == '.')
+			j = i;
+	while (nb[i] && ((i - j) < precision))
+		i++;
+	if (nb[i] && ((i - j) == precision))
+		nb = ft_roundd(nb, i, &j, precision);
+	else if (nb[i] == '\0' && ((i - j) < precision))
 	{
-		var->e_start = LDB_E_START;
-		var->e_end = LDB_E_END;
-		var->m_start = LDB_M_START;
-		var->m_end = LDB_M_END;
-		var->e_bias = LDB_E_BIAS;
-		var->buf = LDB_BUF;
-		var->b = b;
-		var->a = a;
+		nb = ft_realloc(nb, precision + j + 2);
+		while (++i - 1 <= (precision + j))
+			nb[i - 1] = '0';
 	}
-	else
+	if (precision == 0 && !(opt.option & HASH))
 	{
-		var->e_start = E_START;
-		var->e_end = E_END;
-		var->m_start = M_START;
-		var->m_end = M_END;
-		var->e_bias = E_BIAS;
-		var->buf = BUF;
-		var->a = a;
+		nb = ft_realloc(nb, j + 1);
+		nb[j] = '\0';
 	}
+	return (nb);
 }
 
 static char		ft_fill_hidbit(t_define var, char f_str[], int iexp)
@@ -53,11 +60,14 @@ static char		ft_fill_hidbit(t_define var, char f_str[], int iexp)
 static int		ft_fill_iexp(char f_str[], t_define var)
 {
 	int		iexp;
+	char	*tmp;
 
 	iexp = 0;
 	if (!ft_is_null(f_str, var.e_start, ft_strlen(f_str) - 1))
 	{
-		iexp = ft_atoi(ft_mul2_traduct(f_str, 0, var.e_end, var)) - var.e_bias;
+		tmp = ft_mul2_traduct(f_str, 0, var.e_end, var);
+		iexp = ft_atoi(tmp) - var.e_bias;
+		ft_strdel(&tmp);
 		if (iexp == -var.e_bias)
 			iexp++;
 	}
@@ -67,12 +77,17 @@ static int		ft_fill_iexp(char f_str[], t_define var)
 static char		*ft_convert(char *value, int iexp)
 {
 	int		i;
+	char	*tmp;
 
 	if (iexp > 0)
 	{
 		i = -1;
 		while (++i < iexp)
+		{
+			tmp = value;
 			value = ft_strmul(value, "2", ft_strlen(value), 1);
+			ft_strdel(&tmp);
+		}
 	}
 	else
 	{
