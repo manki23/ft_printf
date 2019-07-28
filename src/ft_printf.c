@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 13:00:08 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 16:32:21 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 16:14:52 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,36 @@ int				ft_strlentoc(const char *str, char c)
 	return (i);
 }
 
+static void		ft_savelines(int *track, size_t size, char *tab, int *ret)
+{
+	if (track[0] + size > BUFFER_SIZE)
+	{
+		write(1, tab, track[0]);
+		tab = ft_memset(tab, '\0', BUFFER_SIZE);
+		ret[0] += track[0];
+		track = 0;
+	}
+}
+/*
+static char		*ft_overflow(char *str, size_t *size, int *ret)
+{
+	int		i;
+	char	*result;
+
+	i = 0;
+	while (size[0] > BUFFER_SIZE)
+	{
+		write(1, &str[i], BUFFER_SIZE);
+		i += BUFFER_SIZE;
+		ret[0] += BUFFER_SIZE;
+		size -= BUFFER_SIZE;
+	}
+	result = ft_memalloc(size[0] + 1);
+	ft_memcpy(result, &str[i], size[0]);
+	ft_strdel(&str);
+	return (result);
+}*/
+
 static int		ft_analyze(char *ptr, va_list *ap, int *ret)
 {
 	char		*ptr2;
@@ -35,40 +65,24 @@ static int		ft_analyze(char *ptr, va_list *ap, int *ret)
 	while (ptr && ptr[0] == '%')
 	{
 		content = ft_conv(&ptr, ap, &size);
+	//	if (size > BUFFER_SIZE)
+	//		content = ft_overflow(content, &size, ret);
 		if (size > 0)
 		{
-			if (track + size > BUFFER_SIZE)
-			{
-				write(1, tab, track);
-				tab = ft_memset(tab, '\0', BUFFER_SIZE);
-				ret[0] += track;
-				track = 0;
-			}
+			ft_savelines(&track, size, tab, ret);
 			ft_memcpy(&tab[track], content, size);
 			ft_strdel(&content);
 			track += size;
 		}
 		if (!(ptr2 = ft_strchr(ptr, '%')))
 		{
-			if (track + size > BUFFER_SIZE)
-			{
-				write(1, tab, track);
-				tab = ft_memset(tab, '\0', BUFFER_SIZE);
-				ret[0] += track;
-				track = 0;
-			}
+			ft_savelines(&track, size, tab, ret);
 			ft_memcpy(&tab[track], ptr, ft_strlen(ptr));
 			track += ft_strlen(ptr);
 		}
 		else
 		{
-			if (track + size > BUFFER_SIZE)
-			{
-				write(1, tab, track);
-				tab = ft_memset(tab, '\0', BUFFER_SIZE);
-				ret[0] += track;
-				track = 0;
-			}
+			ft_savelines(&track, size, tab, ret);
 			ft_memcpy(&tab[track], ptr, ft_strlen(ptr) - ft_strlen(ptr2));
 			track += ft_strlen(ptr) - ft_strlen(ptr2);
 		}

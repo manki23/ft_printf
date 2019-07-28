@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 11:03:01 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 15:55:41 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 18:20:18 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char		*ft_fill_output(t_option opt, char *nb)
 	char	*output;
 	char	*tmp;
 
+	output = nb;
 	if (opt.width > (int)ft_strlen(nb))
 	{
 		output = ft_memalloc(opt.width + 1);
@@ -63,8 +64,6 @@ static char		*ft_fill_output(t_option opt, char *nb)
 			ft_strdel(&nb);
 		}
 	}
-	else
-		output = nb;
 	return (output);
 }
 

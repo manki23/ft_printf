@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 02:05:31 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 16:47:29 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 14:33:11 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char			*ft_charcat(char a, char *str, int len)
 
 static char		*ft_saveline(t_define var[], char *ret, int i)
 {
-	/*if ((int)ft_strlen(ret) < var->m_end + 1)
+/*	if ((int)ft_strlen(ret) < var->m_end + 1)
 	{
 		i = (int)ft_strlen(ret) - 1;
 		while (++i <= var->m_end)
@@ -77,24 +77,30 @@ char			*ft_dbl_to_str(double arg, t_define var)
 	return (ret);
 }
 
+uint64_t		*ft(uint64_t *dst, const void *src, size_t n)
+{
+	size_t		i;
+	uint64_t	*s;
+
+	i = 0;
+	s = (uint64_t *)src;
+	while (i < n)
+	{
+		dst[i] = s[i];
+		i++;
+	}
+	return (dst);
+}
+
 char			*ft_ldb_to_str(long double arg, t_define *var)
 {
 	char			*ret;
 	unsigned char	*buff;
-	char			*test;
 
-	ft_setvar(var, 0, 0, (double)arg);
-	test = ft_dbl_to_str(var->a, *var);
-	if (!ft_strcmp(test, "inf") || !ft_strcmp(test, "-inf") ||
-			!ft_strcmp(test, "nan"))
-	{
-		buff = ft_memalloc(var->buf + 1);
-		ft_setvar(var, 1, arg, (double)arg);
-		ft_memcpy(buff, &arg, var->buf);
-		ret = ft_ctob(buff, var->buf);
-		ret = ft_saveline(var, ret, 0);
-		ft_memdel((void **)&buff);
-		return (ret);
-	}
-	return (test);
+	ft_setvar(var, 1, arg, (double)arg);
+	buff = (unsigned char *)&arg;
+	buff -= 6;
+	ret = ft_ctob(buff, var->buf);
+	ret = ft_saveline(var, ret, 0);
+	return (ret);
 }

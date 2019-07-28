@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 14:59:26 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 14:18:34 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ char				*ft_mul2_traduct(char *nb, int i, int end, t_define var)
 	return (res);
 }
 
-char				*ft_newtrad(char f_str[], int index, int i)
+char				*ft_newtrad(char f_str[], int index, int i, int len)
 {
 	char	*res;
 	char	*tmp;
 	int		tmp_len;
 
 	res = ft_memalloc(2);
-	if (!ft_is_null(f_str, 1, ft_strlen(f_str) - 1))
+	if (!ft_is_null(f_str, 1, len))
 	{
 		res[0] = '0';
-		while (++i + index <= (int)ft_strlen(f_str))
+		while (++i + index <= len)
 		{
 			if (f_str[index + i] == '1')
 			{

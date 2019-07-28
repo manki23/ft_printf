@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:11:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 14:15:11 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/27 16:51:50 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,17 @@ char			*ft_fill_f_output(t_option opt, va_list *ap, size_t *size)
 	double		a;
 	char		*output;
 	t_define	var;
+	long double b;
 
-	/*	long double b;
-		if (opt.modif & LD_X)
-		{
+	if (opt.modif & LD_X)
+	{
 		b = va_arg(*ap, long double);
 		ft_setvar(&var, opt.modif & LD_X, b, (double)b);
 		output = ft_fill_nb(opt, &var);
 		output = ft_fill_output(opt, output);
 		size[0] = ft_strlen(output);
 		return (output);
-		}
-		*/
+	}
 	a = va_arg(*ap, double);
 	ft_setvar(&var, opt.modif & LD_X, 0, a);
 	output = ft_fill_nb(opt, &var);

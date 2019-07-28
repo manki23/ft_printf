@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 02:21:18 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 15:28:22 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 14:29:56 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char		ft_fill_hidbit(t_define var, char f_str[], int iexp)
 	if ((!ft_is_null(f_str, var.m_start, var.m_end)) ||
 			!ft_is_null(f_str, var.e_start, ft_strlen(f_str) - 1))
 		hidden_bit = '1';
-	if (iexp == 1 - var.e_bias)
+	if ((iexp == 1 - var.e_bias) || (var.buf == LDB_BUF))
 		hidden_bit = '0';
 	return (hidden_bit);
 }
@@ -93,7 +93,9 @@ static char		*ft_convert(char *value, int iexp)
 	{
 		i = 1;
 		while (--i > iexp)
+		{
 			value = ft_strdivby2(value, ft_strlen(value));
+		}
 	}
 	return (value);
 }
@@ -104,11 +106,17 @@ char			*ft_get_fvalue(t_option opt, char f_str[], t_define var)
 	char	hidden_bit;
 	char	*value;
 	int		dot_pos;
+	int		len;
 
 	iexp = ft_fill_iexp(f_str, var);
 	hidden_bit = ft_fill_hidbit(var, f_str, iexp);
-	value = ft_newtrad(f_str, var.m_start, -1);
+	len = var.m_end;
+	if (var.buf == LDB_BUF)
+		len -= 48;
+	value = ft_newtrad(f_str, var.m_start, -1, len);
 	value[0] = hidden_bit;
+	if (var.buf == LDB_BUF)
+		iexp++;
 	value = ft_convert(value, iexp);
 	if (var.buf == LDB_BUF)
 		dot_pos = ft_dbl_len(var.b);

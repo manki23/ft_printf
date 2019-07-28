@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:57:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/22 17:44:10 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 16:19:04 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ char	*ft_conv(char **p, va_list *ap, size_t *size)
 				return (output);
 			}
 		}
-		size[0] = 0;
-		return ("");
 	}
+	size[0] = 0;
 	return (NULL);
 }

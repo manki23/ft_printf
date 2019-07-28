@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/27 10:31:47 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/28 16:19:43 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 # include <unistd.h>
 # include <limits.h>
 
-# define BUFFER_SIZE 4096
+# define BUFFER_SIZE 7096
 
 # define LDB_E_START 1
 # define LDB_E_END 15
 # define LDB_M_START 16
 # define LDB_M_END 127
 # define LDB_E_BIAS 16383
-# define LDB_BUF 16
+# define LDB_BUF sizeof(long double)
 
 # define E_START 1
 # define E_END 11
 # define M_START 12
 # define M_END 63
 # define E_BIAS 1023
-# define BUF 8
+# define BUF sizeof(double)
 
 typedef struct		s_define
 {
@@ -118,7 +118,7 @@ char				*ft_stradd(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_leftadd(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_strmul(char *a, char *b, size_t a_len, size_t b_len);
 char				*ft_strdivby2(char *a, size_t a_len);
-char				*ft_newtrad(char *f_str, int index, int i);
+char				*ft_newtrad(char *f_str, int index, int i, int len);
 char				*ft_putdot(char *str, size_t str_len, int position);
 char				*ft_charcat(char c, char *str, int len);
 void				ft_setvar(t_define *var, int ldb, long double b, double a);
