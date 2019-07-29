@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/28 16:19:43 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/29 16:40:47 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <limits.h>
 
-# define BUFFER_SIZE 7096
+# define BUFFER_SIZE 8096
 
 # define LDB_E_START 1
 # define LDB_E_END 15
@@ -86,12 +86,19 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef struct		s_coord
+{
+	int				i;
+	int				j;
+}					t_coord;
+
 int					ft_printf(const char *restrict format, ...);
 
 char				*ft_conv(char **p, va_list *ap, size_t *size);
 void				ft_fill_t_option(t_option *opt, char **p);
 int					ft_is_conv(char c);
 void				ft_init_option(t_option *opt);
+char				*ft_what_base(t_option opt);
 
 void				ft_add_bit(t_byte *tab, t_byte bit, t_byte at);
 t_byte				ft_read(t_byte tab[], t_byte at);
@@ -108,7 +115,7 @@ int					ft_nblen(long long n);
 int					ft_unblen_base(unsigned long long n, char *base);
 void				ft_tr(char *s, char old, char neww);
 double				ft_ipower(double nb, double power);
-char				*ft_strpower(char *nb, int power);
+char				*ft_strpower(char *nb, int nb_len, int power);
 
 t_byte				ft_is_max(char *bit_nb, int from, int to);
 t_byte				ft_is_null(char *bit_nb, int from, int to);
@@ -121,13 +128,14 @@ char				*ft_strdivby2(char *a, size_t a_len);
 char				*ft_newtrad(char *f_str, int index, int i, int len);
 char				*ft_putdot(char *str, size_t str_len, int position);
 char				*ft_charcat(char c, char *str, int len);
+char				*ft_bischarcat(char a, char b, char *str, int len);
 void				ft_setvar(t_define *var, int ldb, long double b, double a);
 char				*ft_get_fvalue(t_option opt, char f_str[], t_define var);
 
 void				ft_afficher_bit(char *str, int mod);
 void				ft_display(t_option opt);
 
-char				*ft_dbl_to_str(double arg, t_define var);
+char				*ft_dbl_to_str(t_define var);
 char				*ft_ldb_to_str(long double arg, t_define *var);
 char				*ft_roundd(char *nb, int pos, int *dot_pos, int precision);
 

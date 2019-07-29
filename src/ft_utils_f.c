@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:14:41 by manki             #+#    #+#             */
-/*   Updated: 2019/07/28 14:18:34 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/29 11:48:35 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char			*ft_saveline(char *nb, char *res, int end)
 
 	if (nb[0] == '1')
 	{
-		tmp = ft_strpower("2", end);
+		tmp = ft_strpower("2", 1, end);
 		tmp2 = res;
 		res = ft_stradd(res, tmp, ft_strlen(res), ft_strlen(tmp));
 		ft_strdel(&tmp);
@@ -55,9 +55,9 @@ char				*ft_mul2_traduct(char *nb, int i, int end, t_define var)
 	char	*res;
 	int		nb_len;
 
-	if (ft_is_null(nb, 1, ft_strlen(nb) - 1))
-		return ("0");
 	nb_len = var.buf * CHAR_BIT;
+	if (ft_is_null(nb, 1, nb_len - 1))
+		return ("0");
 	if (!(res = ft_memalloc(nb_len)))
 		return (NULL);
 	if (i <= nb_len && end <= nb_len)

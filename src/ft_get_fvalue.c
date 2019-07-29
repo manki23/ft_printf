@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_float4.c                                        :+:      :+:    :+:   */
+/*   ft_get_fvalue.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/25 02:21:18 by manki             #+#    #+#             */
-/*   Updated: 2019/07/28 14:29:56 by manki            ###   ########.fr       */
+/*   Created: 2019/07/29 14:43:32 by manki             #+#    #+#             */
+/*   Updated: 2019/07/29 14:43:34 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,29 @@
 
 static char		*ft_cut_mantissa(t_option opt, char *nb)
 {
-	int		precision;
-	int		i;
-	int		j;
+	t_coord		c;
 
-	precision = 6;
-	if ((opt.option & POINT) && (opt.precision != 6 && opt.precision >= 0))
-		precision = opt.precision;
-	i = -1;
-	j = -1;
-	while (j == -1 && nb[++i])
-		if (nb[i] == '.')
-			j = i;
-	while (nb[i] && ((i - j) < precision))
-		i++;
-	if (nb[i] && ((i - j) == precision))
-		nb = ft_roundd(nb, i, &j, precision);
-	else if (nb[i] == '\0' && ((i - j) < precision))
+	if (!((opt.option & POINT) && (opt.precision != 6 && opt.precision >= 0)))
+		opt.precision = 6;
+	c.i = -1;
+	c.j = -1;
+	while (c.j == -1 && nb[++c.i])
+		if (nb[c.i] == '.')
+			c.j = c.i;
+	while (nb[c.i] && ((c.i - c.j) < opt.precision))
+		c.i++;
+	if (nb[c.i] && ((c.i - c.j) == opt.precision))
+		nb = ft_roundd(nb, c.i, &c.j, opt.precision);
+	else if (nb[c.i] == '\0' && ((c.i - c.j) < opt.precision))
 	{
-		nb = ft_realloc(nb, precision + j + 2);
-		while (++i - 1 <= (precision + j))
-			nb[i - 1] = '0';
+		nb = ft_realloc(nb, opt.precision + c.j + 2);
+		while (++c.i - 1 <= (opt.precision + c.j))
+			nb[c.i - 1] = '0';
 	}
-	if (precision == 0 && !(opt.option & HASH))
-	{
-		nb = ft_realloc(nb, j + 1);
-		nb[j] = '\0';
-	}
+	if (opt.precision == 0 && !(opt.option & HASH))
+		nb = ft_realloc(nb, c.j);
+	if (opt.precision == 0 && !(opt.option & HASH))
+		nb[c.j] = '\0';
 	return (nb);
 }
 

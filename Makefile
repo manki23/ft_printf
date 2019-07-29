@@ -6,7 +6,7 @@
 #    By: manki <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/16 14:37:29 by manki             #+#    #+#              #
-#    Updated: 2019/07/28 13:58:31 by manki            ###   ########.fr        #
+#    Updated: 2019/07/29 14:45:51 by manki            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,17 +23,17 @@ OBJ_PATH = ./obj
 OBJLIB_PATH = ./obj
 
 SRC_NAME = ft_printf.c ft_analysis.c ft_basics.c ft_putdot.c \
-		   ft_fill_di_output.c ft_fill_uoxx_output.c ft_float3.c ft_float4.c \
-		   ft_fill_c_output.c ft_fill_s_output.c ft_option.c \
-		   ft_fill_p_output.c ft_utils_f.c ft_strmul.c \
-		   ft_floats.c ft_afficher.c ft_float2.c ft_bitwise.c ft_stradd.c \
+		   ft_fill_di_output.c ft_fill_uoxx_output.c ft_float3.c \
+		   ft_fill_c_output.c ft_fill_s_output.c ft_option.c ft_list.c \
+		   ft_fill_p_output.c ft_utils_f.c ft_strmul.c ft_get_fvalue.c \
+		   ft_floats.c ft_afficher.c ft_round.c ft_bitwise.c ft_stradd.c \
 		   ft_strdiv.c
 
 LIB_NAME = ft_atoi.c ft_isdigit.c ft_lltoa.c ft_lltoa_base.c ft_ulltoa.c \
 		   ft_ulltoa_base.c ft_memchr.c ft_memcpy.c ft_memset.c ft_putchar.c \
 		   ft_putstr.c ft_strchr.c ft_strcmp.c ft_strdel.c ft_strjoin.c \
 		   ft_strlen.c ft_atoll.c ft_strncpy.c ft_strcat.c ft_strnew.c \
-		   ft_ctob.c ft_strljoin.c ft_realloc.c ft_memalloc.c \
+		   ft_ctob.c ft_strljoin.c ft_realloc.c ft_memalloc.c ft_lstdel.c \
 		   ft_memdel.c ft_max.c ft_strrev.c ft_dbl_len.c ft_strncat.c
 
 INC_NAME = ft_printf.h

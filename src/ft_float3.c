@@ -6,43 +6,39 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 02:05:31 by manki             #+#    #+#             */
-/*   Updated: 2019/07/28 14:33:11 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/29 14:55:53 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-char			*ft_charcat(char a, char *str, int len)
+void			ft_setvar(t_define *var, int ldb, long double b, double a)
 {
-	int		i;
-	char	c;
-
-	str = ft_realloc(str, len + 2);
-	i = 0;
-	while (str[i + 1])
+	if (ldb)
 	{
-		c = str[i + 1];
-		str[i + 1] = str[0];
-		str[0] = c;
-		i++;
+		var->e_start = LDB_E_START;
+		var->e_end = LDB_E_END;
+		var->m_start = LDB_M_START;
+		var->m_end = LDB_M_END;
+		var->e_bias = LDB_E_BIAS;
+		var->buf = LDB_BUF;
+		var->b = b;
+		var->a = a;
 	}
-	str[i + 1] = str[0];
-	str[0] = a;
-	return (str);
+	else
+	{
+		var->e_start = E_START;
+		var->e_end = E_END;
+		var->m_start = M_START;
+		var->m_end = M_END;
+		var->e_bias = E_BIAS;
+		var->buf = BUF;
+		var->a = a;
+	}
 }
 
-static char		*ft_saveline(t_define var[], char *ret, int i)
+static char		*ft_saveline(t_define var[], char *ret)
 {
-/*	if ((int)ft_strlen(ret) < var->m_end + 1)
-	{
-		i = (int)ft_strlen(ret) - 1;
-		while (++i <= var->m_end)
-		{
-			ret = ft_realloc(ret, ft_strlen(ret) + 2);
-			ret = ft_strcat(ret, "0");
-		}
-	}*/
-	(void)i;
 	if (ft_is_max(ret, var->e_start, var->e_end) &&
 			!ft_is_null(ret, var->m_start, var->m_end))
 	{
@@ -64,43 +60,19 @@ static char		*ft_saveline(t_define var[], char *ret, int i)
 	return (ret);
 }
 
-char			*ft_dbl_to_str(double arg, t_define var)
+char			*ft_dbl_to_str(t_define var)
 {
 	char			*ret;
 	unsigned char	*buff;
 
-	buff = ft_memalloc(var.buf + 1);
-	ft_memcpy(buff, &arg, var.buf);
-	ret = ft_ctob(buff, var.buf);
-	ret = ft_saveline(&var, ret, 0);
-	ft_strdel((char **)&buff);
-	return (ret);
-}
-
-uint64_t		*ft(uint64_t *dst, const void *src, size_t n)
-{
-	size_t		i;
-	uint64_t	*s;
-
-	i = 0;
-	s = (uint64_t *)src;
-	while (i < n)
+	if (var.buf == LDB_BUF)
 	{
-		dst[i] = s[i];
-		i++;
+		buff = (unsigned char *)&(var.b);
+		buff -= 6;
 	}
-	return (dst);
-}
-
-char			*ft_ldb_to_str(long double arg, t_define *var)
-{
-	char			*ret;
-	unsigned char	*buff;
-
-	ft_setvar(var, 1, arg, (double)arg);
-	buff = (unsigned char *)&arg;
-	buff -= 6;
-	ret = ft_ctob(buff, var->buf);
-	ret = ft_saveline(var, ret, 0);
+	else
+		buff = (unsigned char *)&(var.a);
+	ret = ft_ctob(buff, var.buf);
+	ret = ft_saveline(&var, ret);
 	return (ret);
 }

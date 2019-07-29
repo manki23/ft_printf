@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 14:05:23 by manki             #+#    #+#             */
-/*   Updated: 2019/07/25 02:48:07 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/29 16:39:50 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int		ft_check(char c)
 	char	*tab;
 	int		i;
 
-	tab = ft_strjoin("", "lLh#0-+ .");
+	tab = ft_memalloc(10);
+	tab = ft_strncpy(tab, "lLh#0-+ .", 10);
 	i = -1;
 	while (tab[++i])
 		if (c == tab[i] || ft_isdigit(c))
@@ -70,14 +71,26 @@ void			ft_fill_t_option(t_option *opt, char **p)
 				p[0][0] != '0')
 		{
 			opt->width = ft_atoi(p[0]);
-			p[0] += ft_nblen(ft_atoi(p[0]));
+			p[0] += ft_dbl_len(ft_atoi(p[0]));
 		}
 		else if (ft_read(&(opt->option), 5) && ft_isdigit(p[0][0]))
 		{
 			opt->precision = ft_atoi(p[0]);
-			p[0] += ft_nblen(ft_atoi(p[0]));
+			p[0] += ft_dbl_len(ft_atoi(p[0]));
 		}
 		p[0] += ft_fill_opt(&(opt->option), p[0][0], "-+0 #.");
 	}
 	ft_fill_opt(&(opt->flag), p[0][0], "%uoxX");
+}
+
+char			*ft_what_base(t_option opt)
+{
+	if (opt.flag & L_O)
+		return ("01234567");
+	else if (opt.flag & LL_X)
+		return ("0123456789abcdef");
+	else if (opt.flag & LD_X)
+		return ("0123456789ABCDEF");
+	else
+		return ("0123456789");
 }
