@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 13:25:07 by manki             #+#    #+#             */
-/*   Updated: 2019/07/29 16:41:31 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/31 11:47:48 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,7 @@ char				*ft_fill_uoxx_output(t_option opt, va_list *ap, size_t *siz)
 	output = ft_fill_nb(opt, len, arg);
 	output = ft_fill_output(opt, output);
 	siz[0] = ft_strlen(output);
+	if (siz[0] == 0)
+		ft_strdel(&output);
 	return (output);
 }

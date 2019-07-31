@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 14:43:32 by manki             #+#    #+#             */
-/*   Updated: 2019/07/29 14:43:34 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/31 11:30:31 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char		*ft_cut_mantissa(t_option opt, char *nb)
 			nb[c.i - 1] = '0';
 	}
 	if (opt.precision == 0 && !(opt.option & HASH))
-		nb = ft_realloc(nb, c.j);
+		nb = ft_realloc(nb, c.j + 1);
 	if (opt.precision == 0 && !(opt.option & HASH))
 		nb[c.j] = '\0';
 	return (nb);
@@ -46,7 +46,7 @@ static char		ft_fill_hidbit(t_define var, char f_str[], int iexp)
 
 	hidden_bit = '0';
 	if ((!ft_is_null(f_str, var.m_start, var.m_end)) ||
-			!ft_is_null(f_str, var.e_start, ft_strlen(f_str) - 1))
+			!ft_is_null(f_str, var.e_start, var.m_end))
 		hidden_bit = '1';
 	if ((iexp == 1 - var.e_bias) || (var.buf == LDB_BUF))
 		hidden_bit = '0';
@@ -59,7 +59,7 @@ static int		ft_fill_iexp(char f_str[], t_define var)
 	char	*tmp;
 
 	iexp = 0;
-	if (!ft_is_null(f_str, var.e_start, ft_strlen(f_str) - 1))
+	if (!ft_is_null(f_str, var.e_start, var.m_end))
 	{
 		tmp = ft_mul2_traduct(f_str, 0, var.e_end, var);
 		iexp = ft_atoi(tmp) - var.e_bias;
@@ -107,8 +107,6 @@ char			*ft_get_fvalue(t_option opt, char f_str[], t_define var)
 	iexp = ft_fill_iexp(f_str, var);
 	hidden_bit = ft_fill_hidbit(var, f_str, iexp);
 	len = var.m_end;
-	if (var.buf == LDB_BUF)
-		len -= 48;
 	value = ft_newtrad(f_str, var.m_start, -1, len);
 	value[0] = hidden_bit;
 	if (var.buf == LDB_BUF)

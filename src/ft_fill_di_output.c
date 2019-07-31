@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 13:21:52 by manki             #+#    #+#             */
-/*   Updated: 2019/07/29 16:36:12 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/31 11:47:54 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,7 @@ char			*ft_fill_di_output(t_option opt, va_list *ap, size_t *size)
 	nb = ft_fill_nb(opt, len, arg);
 	output = ft_fill_output(opt, nb, arg);
 	size[0] = ft_strlen(output);
+	if (size[0] == 0)
+		ft_strdel(&output);
 	return (output);
 }

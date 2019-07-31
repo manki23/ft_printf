@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:47:33 by manki             #+#    #+#             */
-/*   Updated: 2019/07/29 17:19:32 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/31 11:29:21 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define LDB_E_START 1
 # define LDB_E_END 15
 # define LDB_M_START 16
-# define LDB_M_END 127
+# define LDB_M_END 127 - 48
 # define LDB_E_BIAS 16383
 # define LDB_BUF sizeof(long double)
 

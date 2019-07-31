@@ -6,7 +6,7 @@
 /*   By: manki <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:11:24 by manki             #+#    #+#             */
-/*   Updated: 2019/07/29 15:00:46 by manki            ###   ########.fr       */
+/*   Updated: 2019/07/31 10:16:23 by manki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static char		*ft_fill_nb(t_option opt, t_define *var)
 	if (!ft_strcmp(f_str, "nan") || !ft_strcmp(f_str, "inf") ||
 			!ft_strcmp(f_str, "-inf"))
 	{
-		nb = ft_memalloc(ft_strlen(f_str) + 1);
-		nb = ft_strncpy(nb, f_str, ft_strlen(f_str));
+		nb = ft_memalloc(var->m_end + 2);
+		nb = ft_strncpy(nb, f_str, var->m_end + 1);
 	}
 	else
 	{
 		nb = ft_get_fvalue(opt, f_str, *var);
-		nul = ft_is_null(f_str, 0, ft_strlen(f_str) - 1);
+		nul = ft_is_null(f_str, 0, var->m_end);
 	}
 	if ((opt.option & PLUS) && ((f_str[0] == '0' || (nul == 1)) || ((nul == 2)
 					&& (nb[0] != '-') && (nb[0] != 'n'))))
