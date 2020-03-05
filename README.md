@@ -6,7 +6,7 @@ Ce sera l’occasion de découvrir une feature du C __les fonctions variadiques_
 et de vous entrainer à la gestion fine des options d’affichage.
 Vous aurez ensuite le droit d’utiliser votre ft_printf dans tous vos projets ultérieurs.*
 
-## Introduction
+## Sujet
 La versatilité de la fonction printf en C représente pour nous un excellent exercice
 de programmation. Ce projet va vous permettre de découvrir
 les fonctions variadiques en C dans un contexte particulièrement adapté, et de voir un
